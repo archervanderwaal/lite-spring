@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2bd777cb-d561-4a85-8b01-18f406c2e035" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/service/v1/BeanFactoryTest.java" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/service/v1/BeanFactoryTest.java" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/petstore-v1.xml" afterPath="$PROJECT_DIR$/src/test/resources/petstore-v1.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -625,7 +623,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531116834144</updated>
-      <workItem from="1531116839474" duration="17499000" />
+      <workItem from="1531116839474" duration="17545000" />
     </task>
     <servers />
   </component>
@@ -633,14 +631,14 @@
     <history-entry file="BeanFactoryTest_testGetPrototypeBean - 2018.07.10 at 00h 10m 50s.xml">
       <configuration name="BeanFactoryTest.testGetPrototypeBean" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="BeanFactoryTest_testGetPrototypeBean - 2018.07.10 at 00h 10m 54s.xml">
+      <configuration name="BeanFactoryTest.testGetPrototypeBean" configurationId="JUnit" />
+    </history-entry>
     <history-entry file="BeanFactoryTest_testGetSingletonBean - 2018.07.09 at 23h 46m 27s.xml">
       <configuration name="BeanFactoryTest.testGetSingletonBean" configurationId="JUnit" />
     </history-entry>
     <history-entry file="BeanFactoryTest_testGetSingletonBean - 2018.07.10 at 00h 05m 37s.xml">
       <configuration name="BeanFactoryTest.testGetSingletonBean" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ResourceTest_testClassPathResource - 2018.07.09 at 18h 54m 02s.xml">
-      <configuration name="ResourceTest.testClassPathResource" configurationId="JUnit" />
     </history-entry>
     <history-entry file="ResourceTest_testFileSystemResource - 2018.07.09 at 18h 54m 55s.xml">
       <configuration name="ResourceTest.testFileSystemResource" configurationId="JUnit" />
@@ -662,11 +660,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17499000" />
+    <option name="totallyTimeSpent" value="17545000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -676,9 +673,9 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />

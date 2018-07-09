@@ -6,7 +6,6 @@ import me.stormma.litespring.beans.factory.BeanDefinitionStoreException;
 import me.stormma.litespring.beans.factory.support.BeanDefinitionRegistry;
 import me.stormma.litespring.beans.factory.support.GenericBeanDefinition;
 import me.stormma.litespring.core.io.Resource;
-import me.stormma.litespring.utils.ClassUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
