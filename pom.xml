@@ -10,6 +10,11 @@
 
     <description>lite-spring</description>
 
+    <properties>
+        <junit.version>4.12</junit.version>
+        <dom4j.version>1.6.1</dom4j.version>
+    </properties>
+
     <developers>
         <developer>
             <id>main</id>
@@ -23,7 +28,14 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j.version}</version>
         </dependency>
     </dependencies>
 </project>
