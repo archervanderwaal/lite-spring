@@ -7,7 +7,5 @@ import me.stormma.litespring.beans.BeanDefinition;
  */
 public interface BeanFactory {
 
-    BeanDefinition getBeanDefinition(String petStore);
-
     Object getBean(String petStore);
 }

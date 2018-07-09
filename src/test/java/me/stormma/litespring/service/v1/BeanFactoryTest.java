@@ -1,11 +1,11 @@
 package me.stormma.litespring.service.v1;
 
-import me.stormma.litespring.beans.BeanDefinition;
 import me.stormma.litespring.beans.factory.BeanCreationException;
 import me.stormma.litespring.beans.factory.BeanDefinitionStoreException;
-import me.stormma.litespring.beans.factory.BeanFactory;
 import me.stormma.litespring.beans.factory.support.DefaultBeanFactory;
+import me.stormma.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -13,20 +13,28 @@ import org.junit.Test;
  */
 public class BeanFactoryTest {
 
+    private DefaultBeanFactory defaultBeanFactory = null;
+
+    private XmlBeanDefinitionReader reader = null;
+
+    @Before
+    public void setUp() {
+        defaultBeanFactory = new DefaultBeanFactory();
+        reader = new XmlBeanDefinitionReader(defaultBeanFactory);
+    }
+
     @Test
     public void testGetBean() {
-        BeanFactory beanFactory = new DefaultBeanFactory("petstore-v1.xml");
-        BeanDefinition beanDefinition = beanFactory.getBeanDefinition("petStore");
-        Assert.assertEquals("me.stormma.litespring.service.v1.PetStoreService", beanDefinition.getBeanClassName());
-        PetStoreService petStoreService  = (PetStoreService) beanFactory.getBean("petStore");
+        reader.loadBeanDefinition("petstore-v1.xml");
+        PetStoreService petStoreService = (PetStoreService) defaultBeanFactory.getBean("petStore");
         Assert.assertNotNull(petStoreService);
     }
 
     @Test
     public void testInvalidBean() {
-        BeanFactory beanFactory = new DefaultBeanFactory("petstore-v1.xml");
+        reader.loadBeanDefinition("petstore-v1.xml");
         try {
-            beanFactory.getBean("invalidBean");
+            defaultBeanFactory.getBean("invalidBean");
         } catch (BeanCreationException exception) {
             return;
         }
@@ -36,7 +44,7 @@ public class BeanFactoryTest {
     @Test
     public void testInvalidXMLResourceFile() {
         try {
-            BeanFactory beanFactory = new DefaultBeanFactory("invalid.xml");
+            reader.loadBeanDefinition("invalid.xml");
         } catch (BeanDefinitionStoreException exception) {
             exception.printStackTrace();
             return;
