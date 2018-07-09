@@ -3,6 +3,7 @@ package me.stormma.litespring.beans.factory.support;
 import me.stormma.litespring.beans.BeanDefinition;
 import me.stormma.litespring.beans.factory.BeanCreationException;
 import me.stormma.litespring.beans.factory.BeanFactory;
+import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
 import me.stormma.litespring.utils.ClassUtils;
 import me.stormma.litespring.utils.StringUtils;
 
@@ -13,12 +14,14 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author stormma stormmaybin@gmail.com
  */
-public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
+public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, ConfigurableBeanFactory {
 
     /**
      * load bean definitions to map
      */
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+
+    private ClassLoader classLoader;
 
     public DefaultBeanFactory() {
 
@@ -51,7 +54,7 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
         if (Objects.isNull(beanDefinition)) {
             throw new BeanCreationException(String.format("bean definition '[beanId = %s]' does not exist.", beanId));
         }
-        ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
+        ClassLoader classLoader = this.getClassLoader();
         String beanClassName = beanDefinition.getBeanClassName();
         try {
             Class<?> beanClass = classLoader.loadClass(beanClassName);
@@ -60,5 +63,15 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
         } catch (Exception e) {
             throw new BeanCreationException("create bean for " + beanClassName + " failed.");
         }
+    }
+
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
+    }
+
+    @Override
+    public ClassLoader getClassLoader() {
+        return this.classLoader != null ? this.classLoader : ClassUtils.getDefaultClassLoader();
     }
 }

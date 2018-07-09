@@ -4,6 +4,7 @@ import me.stormma.litespring.beans.context.ApplicationContext;
 import me.stormma.litespring.beans.factory.support.DefaultBeanFactory;
 import me.stormma.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import me.stormma.litespring.core.io.Resource;
+import me.stormma.litespring.utils.ClassUtils;
 
 /**
  * @author stormma stormmaybin@gmail.com
@@ -19,6 +20,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         Resource resource = this.getResourceByPath(configurationFile);
         reader.loadBeanDefinition(resource);
+        factory.setBeanClassLoader(this.getClassLoader());
     }
 
     @Override
@@ -27,4 +29,14 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     }
 
     protected abstract Resource getResourceByPath(String configurationFile);
+
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        this.beanClassLoader = classLoader;
+    }
+
+    @Override
+    public ClassLoader getClassLoader() {
+        return this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader();
+    }
 }

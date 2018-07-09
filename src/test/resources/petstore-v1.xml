@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- bean definitions here -->
-    <bean id="petStore" class="me.stormma.litespring.service.v1.PetStoreService"/>
+    <bean id="petStore" class="me.stormma.litespring.service.v1.entity.PetStoreService"/>
 
     <!-- invalid bean definition -->
     <bean id="invalidBean" class="invalid"/>
