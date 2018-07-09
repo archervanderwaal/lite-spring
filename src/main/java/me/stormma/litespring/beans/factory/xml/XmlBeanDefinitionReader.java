@@ -1,6 +1,7 @@
 package me.stormma.litespring.beans.factory.xml;
 
 import me.stormma.litespring.beans.BeanDefinition;
+import me.stormma.litespring.beans.BeanScope;
 import me.stormma.litespring.beans.factory.BeanDefinitionStoreException;
 import me.stormma.litespring.beans.factory.support.BeanDefinitionRegistry;
 import me.stormma.litespring.beans.factory.support.GenericBeanDefinition;
@@ -33,53 +34,17 @@ public class XmlBeanDefinitionReader {
     public static final String CLASS_ATTRIBUTE = "class";
 
     /**
+     * scope attribute in xml properties, singleton or prototype
+     */
+    public static final String SCOPE_ATTRIBUTE = "scope";
+
+    /**
      * bean definition registry
      */
     private final BeanDefinitionRegistry registry;
 
     public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
         this.registry = registry;
-    }
-
-    /**
-     * load bean definitions in xml resource configuration file.
-     * <pre>as:</pre>
-     * <code>
-     *     BeanFactory factory = new DefaultBeanFactory("xxx.xml");
-     * </code>
-     * the xxx.xml is xml resource configuration file
-     * @param resource
-     */
-    @Deprecated
-    public void loadBeanDefinition(String resource) {
-        InputStream resourceStream = null;
-        try {
-            ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
-            resourceStream = classLoader.getResourceAsStream(resource);
-            SAXReader reader = new SAXReader();
-            Document document = reader.read(resourceStream);
-            /*get beans "<beans>" label*/
-            Element root = document.getRootElement();
-            Iterator elementIterator = root.elementIterator();
-            while (elementIterator.hasNext()) {
-                Element element = (Element) elementIterator.next();
-                String beanId = element.attributeValue(ID_ATTRIBUTE);
-                String beanClassName = element.attributeValue(CLASS_ATTRIBUTE);
-                BeanDefinition beanDefinition = new GenericBeanDefinition(beanId, beanClassName);
-                registry.registerBeanDefinition(beanId, beanDefinition);
-            }
-        } catch (DocumentException e) {
-            throw new BeanDefinitionStoreException("parse xml configuration file failed, " +
-                    "please check xml configuration file is there or spelling errors, 'resource = " + resource + "'.");
-        } finally {
-            if (!Objects.isNull(resourceStream)) {
-                try {
-                    resourceStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     /**
@@ -104,7 +69,13 @@ public class XmlBeanDefinitionReader {
                 Element element = (Element) elementIterator.next();
                 String beanId = element.attributeValue(ID_ATTRIBUTE);
                 String beanClassName = element.attributeValue(CLASS_ATTRIBUTE);
+                String scope = element.attributeValue(SCOPE_ATTRIBUTE);
                 BeanDefinition beanDefinition = new GenericBeanDefinition(beanId, beanClassName);
+                if (!Objects.isNull(scope)) {
+                    beanDefinition.setScope(scope.equalsIgnoreCase("singleton") ? BeanScope.SINGLETON : BeanScope.PROTOTYPE);
+                } else {
+                    beanDefinition.setScope(BeanScope.DEFAULT);
+                }
                 registry.registerBeanDefinition(beanId, beanDefinition);
             }
         } catch (DocumentException | FileNotFoundException e) {

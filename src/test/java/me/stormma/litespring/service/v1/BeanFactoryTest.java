@@ -4,6 +4,7 @@ import me.stormma.litespring.beans.factory.BeanCreationException;
 import me.stormma.litespring.beans.factory.BeanDefinitionStoreException;
 import me.stormma.litespring.beans.factory.support.DefaultBeanFactory;
 import me.stormma.litespring.beans.factory.xml.XmlBeanDefinitionReader;
+import me.stormma.litespring.core.io.ClassPathResource;
 import me.stormma.litespring.service.v1.entity.PetStoreService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,14 +27,22 @@ public class BeanFactoryTest {
 
     @Test
     public void testGetBean() {
-        reader.loadBeanDefinition("petstore-v1.xml");
+        reader.loadBeanDefinition(new ClassPathResource("petstore-v1.xml"));
         PetStoreService petStoreService = (PetStoreService) defaultBeanFactory.getBean("petStore");
         Assert.assertNotNull(petStoreService);
     }
 
     @Test
+    public void testGetSingletonBean() {
+        reader.loadBeanDefinition(new ClassPathResource("petstore-v1.xml"));
+        PetStoreService petStoreService1 = (PetStoreService) defaultBeanFactory.getBean("petStore");
+        PetStoreService petStoreService2 = (PetStoreService) defaultBeanFactory.getBean("petStore");
+        Assert.assertEquals(petStoreService1, petStoreService2);
+    }
+
+    @Test
     public void testInvalidBean() {
-        reader.loadBeanDefinition("petstore-v1.xml");
+        reader.loadBeanDefinition(new ClassPathResource("petstore-v1.xml"));
         try {
             defaultBeanFactory.getBean("invalidBean");
         } catch (BeanCreationException exception) {
@@ -45,7 +54,7 @@ public class BeanFactoryTest {
     @Test
     public void testInvalidXMLResourceFile() {
         try {
-            reader.loadBeanDefinition("invalid.xml");
+            reader.loadBeanDefinition(new ClassPathResource("invalid.xml"));
         } catch (BeanDefinitionStoreException exception) {
             exception.printStackTrace();
             return;

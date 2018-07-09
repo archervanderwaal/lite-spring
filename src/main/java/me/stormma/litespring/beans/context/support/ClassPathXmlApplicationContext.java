@@ -1,8 +1,5 @@
 package me.stormma.litespring.beans.context.support;
 
-import me.stormma.litespring.beans.context.ApplicationContext;
-import me.stormma.litespring.beans.factory.support.DefaultBeanFactory;
-import me.stormma.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import me.stormma.litespring.core.io.ClassPathResource;
 import me.stormma.litespring.core.io.Resource;
 

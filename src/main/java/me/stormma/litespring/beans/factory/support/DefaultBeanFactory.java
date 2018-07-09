@@ -14,7 +14,9 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author stormma stormmaybin@gmail.com
  */
-public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, ConfigurableBeanFactory {
+public class DefaultBeanFactory
+        extends DefaultSingletonBeanRegistry
+        implements BeanFactory, BeanDefinitionRegistry, ConfigurableBeanFactory {
 
     /**
      * load bean definitions to map
@@ -54,6 +56,18 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry, 
         if (Objects.isNull(beanDefinition)) {
             throw new BeanCreationException(String.format("bean definition '[beanId = %s]' does not exist.", beanId));
         }
+        if (beanDefinition.isSingleton()) {
+            Object singletonBean = this.getSingletonBean(beanId);
+            if (Objects.isNull(singletonBean)) {
+                singletonBean = createBean(beanDefinition);
+                this.registerSingletonBean(beanId, singletonBean);
+            }
+            return singletonBean;
+        }
+        return createBean(beanDefinition);
+    }
+
+    private Object createBean(BeanDefinition beanDefinition) {
         ClassLoader classLoader = this.getClassLoader();
         String beanClassName = beanDefinition.getBeanClassName();
         try {
