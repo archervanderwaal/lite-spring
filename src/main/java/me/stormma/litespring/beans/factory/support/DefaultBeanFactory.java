@@ -46,6 +46,11 @@ public class DefaultBeanFactory implements BeanFactory {
         loadBeanDefinition(resource);
     }
 
+    /**
+     * get BeanDefinition
+     * @param beanId
+     * @return
+     */
     public BeanDefinition getBeanDefinition(String beanId) {
         if (StringUtils.isNullOrEmpty(beanId)) {
             throw new IllegalArgumentException("bean's attribute id must be not null, [ beanID = " + beanId + " ]");
@@ -73,6 +78,15 @@ public class DefaultBeanFactory implements BeanFactory {
         }
     }
 
+    /**
+     * load bean definitions in xml resource configuration file.
+     * <pre>as:</pre>
+     * <code>
+     *     BeanFactory factory = new DefaultBeanFactory("xxx.xml");
+     * </code>
+     * the xxx.xml is xml resource configuration file
+     * @param resource
+     */
     private void loadBeanDefinition(String resource) {
         InputStream resourceStream = null;
         try {
