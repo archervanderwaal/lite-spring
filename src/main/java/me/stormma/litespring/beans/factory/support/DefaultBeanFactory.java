@@ -1,6 +1,8 @@
 package me.stormma.litespring.beans.factory.support;
 
 import me.stormma.litespring.beans.BeanDefinition;
+import me.stormma.litespring.beans.factory.BeanCreationException;
+import me.stormma.litespring.beans.factory.BeanDefinitionStoreException;
 import me.stormma.litespring.beans.factory.BeanFactory;
 import me.stormma.litespring.utils.ClassUtils;
 import me.stormma.litespring.utils.StringUtils;
@@ -53,12 +55,12 @@ public class DefaultBeanFactory implements BeanFactory {
 
     /**
      * @param beanId
-     * @return bean's instance, but no guarantee that the result is null.
+     * @return bean's instance, guarantee that the result is not null.
      */
     public Object getBean(String beanId) {
         BeanDefinition beanDefinition = this.getBeanDefinition(beanId);
         if (Objects.isNull(beanDefinition)) {
-            return null;
+            throw new BeanCreationException(String.format("bean definition '[beanId = %s]' does not exist.", beanId));
         }
         ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
         String beanClassName = beanDefinition.getBeanClassName();
@@ -66,14 +68,9 @@ public class DefaultBeanFactory implements BeanFactory {
             Class<?> beanClass = classLoader.loadClass(beanClassName);
             // non-parametric constructor
             return beanClass.newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new BeanCreationException("create bean for " + beanClassName + " failed.");
         }
-        return null;
     }
 
     private void loadBeanDefinition(String resource) {
@@ -94,7 +91,8 @@ public class DefaultBeanFactory implements BeanFactory {
                 this.beanDefinitionMap.put(beanId, beanDefinition);
             }
         } catch (DocumentException e) {
-            e.printStackTrace();
+            throw new BeanDefinitionStoreException("parse xml configuration file failed, " +
+                    "please check xml configuration file is there or spelling errors, 'resource = " + resource + "'.");
         } finally {
             if (!Objects.isNull(resourceStream)) {
                 try {
