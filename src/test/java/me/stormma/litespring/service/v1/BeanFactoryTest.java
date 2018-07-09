@@ -41,6 +41,14 @@ public class BeanFactoryTest {
     }
 
     @Test
+    public void testGetPrototypeBean() {
+        reader.loadBeanDefinition(new ClassPathResource("petstore-v1.xml"));
+        PetStoreService petStoreService1 = (PetStoreService) defaultBeanFactory.getBean("petStorePrototype");
+        PetStoreService petStoreService2 = (PetStoreService) defaultBeanFactory.getBean("petStorePrototype");
+        Assert.assertNotEquals(petStoreService1, petStoreService2);
+    }
+
+    @Test
     public void testInvalidBean() {
         reader.loadBeanDefinition(new ClassPathResource("petstore-v1.xml"));
         try {

@@ -9,4 +9,7 @@
 
     <!-- invalid bean definition -->
     <bean id="invalidBean" class="invalid"/>
+
+    <!-- prototype bean definition -->
+    <bean id="petStorePrototype" class="me.stormma.litespring.service.v1.entity.PetStoreService" scope="prototype"/>
 </beans>
