@@ -7,5 +7,5 @@ purpose of this framework is to learn spring in depth.
 
 ### features
 
-1. ioc
-2. aop
+1. ioc (finishing)
+2. aop (later)
