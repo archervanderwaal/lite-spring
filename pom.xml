@@ -9,10 +9,25 @@
     <version>1.0-SNAPSHOT</version>
 
     <description>lite-spring</description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <properties>
         <junit.version>4.12</junit.version>
         <dom4j.version>1.6.1</dom4j.version>
+        <jetbrains.version>16.0.1</jetbrains.version>
+        <log4j.version>1.2.17</log4j.version>
+        <commons-logging.version>1.2</commons-logging.version>
     </properties>
 
     <developers>
@@ -36,6 +51,24 @@
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
             <version>${dom4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${jetbrains.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-logging.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
         </dependency>
     </dependencies>
 </project>

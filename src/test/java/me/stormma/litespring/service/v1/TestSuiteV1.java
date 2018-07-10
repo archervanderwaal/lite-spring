@@ -8,9 +8,9 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        ApplicationContextTest.class,
-        BeanFactoryTest.class,
-        ResourceTest.class
+        ApplicationContextTestV1.class,
+        BeanFactoryTestV1.class,
+        ResourceTestV1.class
 })
-public class V1TestSuite {
+public class TestSuiteV1 {
 }

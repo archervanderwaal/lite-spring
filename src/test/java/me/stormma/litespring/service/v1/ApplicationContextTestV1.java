@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * @author stormma stormmaybin@gmail.com
  */
-public class ApplicationContextTest {
+public class ApplicationContextTestV1 {
 
     @Test
     public void testGetBeanUseClassPathApplicationContext() {

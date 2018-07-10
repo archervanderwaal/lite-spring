@@ -1,5 +1,7 @@
 package me.stormma.litespring.beans;
 
+import java.util.List;
+
 /**
  * @author stormma stormmaybin@gmail.com
  */
@@ -34,4 +36,10 @@ public interface BeanDefinition {
      * @return
      */
     BeanScope getScope();
+
+    /**
+     * get bean's property values attribute
+     * @return
+     */
+    List<PropertyValue> getPropertyValues();
 }

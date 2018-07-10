@@ -13,7 +13,7 @@ import org.junit.Test;
 /**
  * @author stormma stormmaybin@gmail.com
  */
-public class BeanFactoryTest {
+public class BeanFactoryTestV1 {
 
     private DefaultBeanFactory defaultBeanFactory = null;
 

@@ -2,6 +2,10 @@ package me.stormma.litespring.beans.factory.support;
 
 import me.stormma.litespring.beans.BeanDefinition;
 import me.stormma.litespring.beans.BeanScope;
+import me.stormma.litespring.beans.PropertyValue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author stormma stormmaybin@gmail.com
@@ -18,9 +22,12 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private BeanScope scope = BeanScope.DEFAULT;
 
+    private List<PropertyValue> propertyValues;
+
     public GenericBeanDefinition(String beanId, String beanClassName) {
         this.beanId = beanId;
         this.beanClassName = beanClassName;
+        this.propertyValues = new ArrayList<>();
     }
 
     public String getBeanClassName() {
@@ -47,5 +54,10 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public BeanScope getScope() {
         return this.scope;
+    }
+
+    @Override
+    public List<PropertyValue> getPropertyValues() {
+        return this.propertyValues;
     }
 }

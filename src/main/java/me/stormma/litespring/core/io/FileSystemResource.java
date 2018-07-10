@@ -31,4 +31,9 @@ public class FileSystemResource implements Resource {
     public String getDescription() {
         return "configuration file in [" + this.file.getAbsolutePath() + "]";
     }
+
+    @Override
+    public String toString() {
+        return getDescription();
+    }
 }

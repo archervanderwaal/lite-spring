@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * @author stormma stormmaybin@gmail.com
  */
-public class ResourceTest {
+public class ResourceTestV1 {
 
     @Test
     public void testClassPathResource() throws IOException {

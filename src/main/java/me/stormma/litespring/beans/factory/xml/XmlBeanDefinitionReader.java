@@ -2,10 +2,17 @@ package me.stormma.litespring.beans.factory.xml;
 
 import me.stormma.litespring.beans.BeanDefinition;
 import me.stormma.litespring.beans.BeanScope;
+import me.stormma.litespring.beans.PropertyValue;
 import me.stormma.litespring.beans.factory.BeanDefinitionStoreException;
+import me.stormma.litespring.beans.factory.config.RuntimeBeanReference;
+import me.stormma.litespring.beans.factory.config.TypedStringValue;
 import me.stormma.litespring.beans.factory.support.BeanDefinitionRegistry;
 import me.stormma.litespring.beans.factory.support.GenericBeanDefinition;
 import me.stormma.litespring.core.io.Resource;
+import me.stormma.litespring.utils.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -38,9 +45,31 @@ public class XmlBeanDefinitionReader {
     public static final String SCOPE_ATTRIBUTE = "scope";
 
     /**
+     * property attribute in xml properties
+     */
+    public static final String PROPERTY_ATTRIBUTE = "property";
+
+    /**
+     * reference attribute in xml properties
+     */
+    public static final String REFERENCE_ATTRIBUTE = "ref";
+
+    /**
+     * value attribute in xml properties
+     */
+    public static final String VALUE_ATTRIBUTE = "value";
+
+    /**
+     * name attribute in xml properties
+     */
+    public static final String NAME_ATTRIBUTE = "name";
+
+    /**
      * bean definition registry
      */
     private final BeanDefinitionRegistry registry;
+
+    protected final Logger logger = Logger.getLogger(XmlBeanDefinitionReader.class);
 
     public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
         this.registry = registry;
@@ -75,6 +104,7 @@ public class XmlBeanDefinitionReader {
                 } else {
                     beanDefinition.setScope(BeanScope.DEFAULT);
                 }
+                parsePropertyElement(element, beanDefinition);
                 registry.registerBeanDefinition(beanId, beanDefinition);
             }
         } catch (DocumentException | FileNotFoundException e) {
@@ -88,6 +118,41 @@ public class XmlBeanDefinitionReader {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private void parsePropertyElement(Element element, BeanDefinition beanDefinition) {
+        Iterator elementIterator = element.elementIterator(PROPERTY_ATTRIBUTE);
+        while (elementIterator.hasNext()) {
+            Element propertyElement = (Element) elementIterator.next();
+            String propertyName = propertyElement.attributeValue(NAME_ATTRIBUTE);
+            if (!StringUtils.hasLength(propertyName)) {
+                logger.fatal("The 'property' label must have 'name' attribute.");
+                return;
+            }
+            Object value = parsePropertyValue(propertyElement, beanDefinition, propertyName);
+            PropertyValue propertyValue = new PropertyValue(propertyName, value);
+            beanDefinition.getPropertyValues().add(propertyValue);
+        }
+    }
+
+    private Object parsePropertyValue(Element propertyElement, BeanDefinition beanDefinition, String propertyName) {
+        String elementName = StringUtils.isNotNullOrEmpty(propertyName) ?
+                "<property> element for property '" + propertyName + "'" :
+                "<constructor-arg> element";
+
+        boolean hasReferenceAttribute = !Objects.isNull(propertyElement.attribute(REFERENCE_ATTRIBUTE));
+        boolean hasValueAttribute = !Objects.isNull(propertyElement.attributeValue(VALUE_ATTRIBUTE));
+        if (hasReferenceAttribute) {
+            String refName = propertyElement.attributeValue(REFERENCE_ATTRIBUTE);
+            if (!StringUtils.hasText(refName)) {
+                logger.error(elementName + " contains empty 'ref' attribute");
+            }
+            return new RuntimeBeanReference(refName);
+        } else if (hasValueAttribute) {
+            return new TypedStringValue(propertyElement.attributeValue(VALUE_ATTRIBUTE));
+        } else {
+            throw new RuntimeException(elementName + " must specify a ref or value");
         }
     }
 }
