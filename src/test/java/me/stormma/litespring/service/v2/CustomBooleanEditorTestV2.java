@@ -21,7 +21,7 @@ public class CustomBooleanEditorTestV2 {
         // other
         booleanEditor.setAsText("on");
         Assert.assertTrue((Boolean) booleanEditor.getValue());
-        booleanEditor.setAsText("offer");
+        booleanEditor.setAsText("off");
         Assert.assertFalse((Boolean) booleanEditor.getValue());
 
         booleanEditor.setAsText("yes");
