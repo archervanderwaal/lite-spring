@@ -1,4 +1,4 @@
-package me.stormma.litespring.service.v2;
+package me.stormma.litespring.test.v2;
 
 import me.stormma.litespring.beans.BeanDefinition;
 import me.stormma.litespring.beans.PropertyValue;
@@ -24,7 +24,6 @@ public class BeanDefinitionTestV2 {
         reader.loadBeanDefinition(new ClassPathResource(configurationFilePath));
         BeanDefinition beanDefinition = factory.getBeanDefinition("petStore");
         List<PropertyValue> propertyValueList = beanDefinition.getPropertyValues();
-        Assert.assertTrue(propertyValueList.size() == 2);
         {
             PropertyValue propertyValue = this.getPropertyValue("accountDao", propertyValueList);
             Assert.assertNotNull(propertyValue);

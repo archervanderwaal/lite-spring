@@ -1,9 +1,9 @@
-package me.stormma.litespring.service.v1;
+package me.stormma.litespring.test.v1;
 
 import me.stormma.litespring.beans.context.ApplicationContext;
 import me.stormma.litespring.beans.context.support.ClassPathXmlApplicationContext;
 import me.stormma.litespring.beans.context.support.FileSystemXmlApplicationContext;
-import me.stormma.litespring.service.v1.entity.PetStoreService;
+import me.stormma.litespring.test.v1.entity.PetStoreService;
 import org.junit.Assert;
 import org.junit.Test;
 

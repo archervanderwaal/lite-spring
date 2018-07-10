@@ -1,4 +1,4 @@
-package me.stormma.litespring.service.v2;
+package me.stormma.litespring.test.v2;
 
 import me.stormma.litespring.beans.factory.config.RuntimeBeanReference;
 import me.stormma.litespring.beans.factory.config.TypedStringValue;
@@ -6,7 +6,7 @@ import me.stormma.litespring.beans.factory.support.BeanDefinitionValueResolver;
 import me.stormma.litespring.beans.factory.support.DefaultBeanFactory;
 import me.stormma.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import me.stormma.litespring.core.io.ClassPathResource;
-import me.stormma.litespring.service.v2.entity.AccountDao;
+import me.stormma.litespring.test.v2.entity.AccountDao;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

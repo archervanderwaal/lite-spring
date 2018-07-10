@@ -1,4 +1,4 @@
-package me.stormma.litespring.service.v1;
+package me.stormma.litespring.test.v1;
 
 import me.stormma.litespring.core.io.ClassPathResource;
 import me.stormma.litespring.core.io.FileSystemResource;

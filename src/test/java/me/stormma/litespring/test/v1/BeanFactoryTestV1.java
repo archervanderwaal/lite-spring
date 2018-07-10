@@ -1,11 +1,11 @@
-package me.stormma.litespring.service.v1;
+package me.stormma.litespring.test.v1;
 
 import me.stormma.litespring.beans.factory.BeanCreationException;
 import me.stormma.litespring.beans.factory.BeanDefinitionStoreException;
 import me.stormma.litespring.beans.factory.support.DefaultBeanFactory;
 import me.stormma.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import me.stormma.litespring.core.io.ClassPathResource;
-import me.stormma.litespring.service.v1.entity.PetStoreService;
+import me.stormma.litespring.test.v1.entity.PetStoreService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package me.stormma.litespring.service.v2;
+package me.stormma.litespring.test.v2;
 
 import me.stormma.litespring.beans.SimpleTypeConverter;
 import me.stormma.litespring.beans.TypeConverter;

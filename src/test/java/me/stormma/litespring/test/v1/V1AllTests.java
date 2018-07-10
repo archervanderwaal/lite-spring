@@ -1,4 +1,4 @@
-package me.stormma.litespring.service.v1;
+package me.stormma.litespring.test.v1;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -12,5 +12,5 @@ import org.junit.runners.Suite;
         BeanFactoryTestV1.class,
         ResourceTestV1.class
 })
-public class TestSuiteV1 {
+public class V1AllTests {
 }

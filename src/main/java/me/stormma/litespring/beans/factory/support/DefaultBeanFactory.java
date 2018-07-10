@@ -2,6 +2,7 @@ package me.stormma.litespring.beans.factory.support;
 
 import me.stormma.litespring.beans.BeanDefinition;
 import me.stormma.litespring.beans.PropertyValue;
+import me.stormma.litespring.beans.SimpleTypeConverter;
 import me.stormma.litespring.beans.factory.BeanCreationException;
 import me.stormma.litespring.beans.factory.BeanFactory;
 import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
@@ -91,6 +92,8 @@ public class DefaultBeanFactory
         if (CollectionUtils.isNotNullOrEmpty(propertyValues)) {
             // create BeanDefinitionValueResolver
             BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+            // get a simple type converter
+            SimpleTypeConverter typeConverter = new SimpleTypeConverter();
             String populatePossibleErrorProperty = null;
             try {
                 for (PropertyValue propertyValue : propertyValues) {
@@ -106,7 +109,8 @@ public class DefaultBeanFactory
                     for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
                         if (propertyDescriptor.getName().equals(propertyName)) {
                             populatePossibleErrorProperty = propertyDescriptor.getName();
-                            propertyDescriptor.getWriteMethod().invoke(bean, resolvedValue);
+                            Object convertValue = typeConverter.convertIfNecessary(resolvedValue, propertyDescriptor.getPropertyType());
+                            propertyDescriptor.getWriteMethod().invoke(bean, convertValue);
                         }
                     }
                 }

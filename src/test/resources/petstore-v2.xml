@@ -5,13 +5,13 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- accountDao-->
-    <bean id="accountDao" class="me.stormma.litespring.service.v2.entity.AccountDao"/>
+    <bean id="accountDao" class="me.stormma.litespring.test.v2.entity.AccountDao"/>
 
     <!-- itemDao-->
-    <bean id="itemDao" class="me.stormma.litespring.service.v2.entity.ItemDao"/>
+    <bean id="itemDao" class="me.stormma.litespring.test.v2.entity.ItemDao"/>
 
     <!-- prototype bean definition -->
-    <bean id="petStore" class="me.stormma.litespring.service.v2.entity.PetStoreService">
+    <bean id="petStore" class="me.stormma.litespring.test.v2.entity.PetStoreService">
         <property name="accountDao" ref="accountDao"/>
         <property name="itemDao" ref="itemDao"/>
         <property name="test" value="testTypedStringValue"/>

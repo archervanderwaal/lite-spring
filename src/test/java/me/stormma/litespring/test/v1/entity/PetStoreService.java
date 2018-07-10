@@ -1,4 +1,4 @@
-package me.stormma.litespring.service.v1.entity;
+package me.stormma.litespring.test.v1.entity;
 
 /**
  * @author stormma stormmaybin@gmail.com
