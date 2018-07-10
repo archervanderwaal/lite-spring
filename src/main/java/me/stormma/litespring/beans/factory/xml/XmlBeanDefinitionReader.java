@@ -75,7 +75,7 @@ public class XmlBeanDefinitionReader {
 
     /**
      * load bean definitions in xml resource configuration file.
-     * <pre>as:</pre>
+     * <pre>following:</pre>
      * <code>
      *     BeanFactory factory = new DefaultBeanFactory("xxx.xml");
      * </code>
@@ -119,6 +119,20 @@ public class XmlBeanDefinitionReader {
         }
     }
 
+    /**
+     * if xml configuration file has following code.
+     * <code>
+     *     <bean name="vipDao" class="me.stormma.vipDao"/>
+     *     <bean name="userDao" class="me.stormma.UserDao">
+     *         <property name="vipDao" ref="vipDao"/>
+     *     </bean>
+     * </code>
+     * the function of this method is to parse <property> label and set propertyValues property of BeanDefinition,
+     * For the above configuration file, the propertyValues property of BeanDefinition is:
+     * [{name="vipDao", value="vipDao"(RuntimeBeanReference)}]
+     * @param element
+     * @param beanDefinition
+     */
     private void parsePropertyElement(Element element, BeanDefinition beanDefinition) {
         Iterator elementIterator = element.elementIterator(PROPERTY_ATTRIBUTE);
         while (elementIterator.hasNext()) {
@@ -134,6 +148,14 @@ public class XmlBeanDefinitionReader {
         }
     }
 
+    /**
+     * The auxiliary method of the above method parsePropertyElement, the function of this method is get of real value by
+     * propertyName.
+     * @param propertyElement
+     * @param beanDefinition
+     * @param propertyName
+     * @return
+     */
     private Object parsePropertyValue(Element propertyElement, BeanDefinition beanDefinition, String propertyName) {
         String elementName = StringUtils.isNotNullOrEmpty(propertyName) ?
                 "<property> element for property '" + propertyName + "'" :
