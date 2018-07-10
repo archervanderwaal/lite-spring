@@ -14,5 +14,7 @@
     <bean id="petStore" class="me.stormma.litespring.service.v2.entity.PetStoreService">
         <property name="accountDao" ref="accountDao"/>
         <property name="itemDao" ref="itemDao"/>
+        <property name="test" value="testTypedStringValue"/>
+        <property name="version" value="2"/>
     </bean>
 </beans>

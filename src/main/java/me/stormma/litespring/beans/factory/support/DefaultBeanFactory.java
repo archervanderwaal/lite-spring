@@ -1,12 +1,19 @@
 package me.stormma.litespring.beans.factory.support;
 
 import me.stormma.litespring.beans.BeanDefinition;
+import me.stormma.litespring.beans.PropertyValue;
 import me.stormma.litespring.beans.factory.BeanCreationException;
 import me.stormma.litespring.beans.factory.BeanFactory;
 import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
 import me.stormma.litespring.utils.ClassUtils;
+import me.stormma.litespring.utils.CollectionUtils;
 import me.stormma.litespring.utils.StringUtils;
+import org.apache.log4j.Logger;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,6 +31,8 @@ public class DefaultBeanFactory
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
     private ClassLoader classLoader;
+
+    protected final Logger logger = Logger.getLogger(DefaultBeanFactory.class);
 
     public DefaultBeanFactory() {
 
@@ -68,6 +77,48 @@ public class DefaultBeanFactory
     }
 
     private Object createBean(BeanDefinition beanDefinition) {
+        // create bean's instance
+        Object bean = instantiateBean(beanDefinition);
+        // populate bean's property
+        populateBean(beanDefinition, bean);
+        return bean;
+    }
+
+    private void populateBean(BeanDefinition beanDefinition, Object bean) {
+        // get bean's all property values, configuration in xml, such as: <property name = "dao" ref = "dao" /> or
+        // <property name = "name" value = "storm">
+        List<PropertyValue> propertyValues = beanDefinition.getPropertyValues();
+        if (CollectionUtils.isNotNullOrEmpty(propertyValues)) {
+            // create BeanDefinitionValueResolver
+            BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+            String populatePossibleErrorProperty = null;
+            try {
+                for (PropertyValue propertyValue : propertyValues) {
+                    String propertyName = propertyValue.getName();
+                    // originalValue instanceOf RuntimeBeanReference or TypedStringValue
+                    // (name and Original value) attribute make up a instance of PropertyValue
+                    Object originalValue = propertyValue.getValue();
+                    // resolvedValue, if <bean> config is <property name="userDao" ref="userDao">,
+                    // so resolvedValue is instance of UserDao, but if TypedStringValue, resolvedValue is itself.
+                    Object resolvedValue = resolver.resolveValueIfNecessary(originalValue);
+                    BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+                    PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+                    for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+                        if (propertyDescriptor.getName().equals(propertyName)) {
+                            populatePossibleErrorProperty = propertyDescriptor.getName();
+                            propertyDescriptor.getWriteMethod().invoke(bean, resolvedValue);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                logger.error("populate bean failed, " + e.getMessage());
+                throw new BeanCreationException("failed to populate instance of class " + bean.getClass().getName()
+                                    + " error property is '" + populatePossibleErrorProperty + "'");
+            }
+        }
+    }
+
+    private Object instantiateBean(BeanDefinition beanDefinition) {
         ClassLoader classLoader = this.getClassLoader();
         String beanClassName = beanDefinition.getBeanClassName();
         try {
