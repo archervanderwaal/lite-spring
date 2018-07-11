@@ -8,6 +8,12 @@ import java.util.List;
 public interface BeanDefinition {
 
     /**
+     * get bean id
+     * @return
+     */
+    String getBeanId();
+
+    /**
      * get bean's class name
      * @return
      */
@@ -42,4 +48,27 @@ public interface BeanDefinition {
      * @return
      */
     List<PropertyValue> getPropertyValues();
+
+    /**
+     * get constructor argument
+     * @return
+     */
+    ConstructorArgument getConstructorArgument();
+
+    /**
+     * get bean class
+     * @return
+     */
+    Class<?> getBeanClass();
+
+    /**
+     * set bean class
+     */
+    void setBeanClass(Class<?> beanClass);
+
+    /**
+     * has constructor argument values
+     * @return
+     */
+    boolean hasConstructorArgumentValues();
 }

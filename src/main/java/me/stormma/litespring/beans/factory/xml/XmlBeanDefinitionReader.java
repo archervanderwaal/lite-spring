@@ -2,6 +2,7 @@ package me.stormma.litespring.beans.factory.xml;
 
 import me.stormma.litespring.beans.BeanDefinition;
 import me.stormma.litespring.beans.BeanScope;
+import me.stormma.litespring.beans.ConstructorArgument;
 import me.stormma.litespring.beans.PropertyValue;
 import me.stormma.litespring.beans.factory.BeanDefinitionStoreException;
 import me.stormma.litespring.beans.factory.config.RuntimeBeanReference;
@@ -63,6 +64,16 @@ public class XmlBeanDefinitionReader {
     public static final String NAME_ATTRIBUTE = "name";
 
     /**
+     * constructor_arg element
+     */
+    public static final String CONSTRUCTOR_ARG_ELEMENT = "constructor-arg";
+
+    /**
+     * type attribute in constructor_arg label
+     */
+    public static final String TYPE_ATTRIBUTE = "type";
+
+    /**
      * bean definition registry
      */
     private final BeanDefinitionRegistry registry;
@@ -102,6 +113,7 @@ public class XmlBeanDefinitionReader {
                 } else {
                     beanDefinition.setScope(BeanScope.DEFAULT);
                 }
+                parseConstructorArgumentElements(element, beanDefinition);
                 parsePropertyElement(element, beanDefinition);
                 registry.registerBeanDefinition(beanId, beanDefinition);
             }
@@ -157,6 +169,8 @@ public class XmlBeanDefinitionReader {
      * @return
      */
     private Object parsePropertyValue(Element propertyElement, BeanDefinition beanDefinition, String propertyName) {
+        // if propertyName is not null or not empty, this case is <constructor-arg> label's attribute, else is
+        // <property> label's attribute
         String elementName = StringUtils.isNotNullOrEmpty(propertyName) ?
                 "<property> element for property '" + propertyName + "'" :
                 "<constructor-arg> element";
@@ -174,5 +188,27 @@ public class XmlBeanDefinitionReader {
         } else {
             throw new RuntimeException(elementName + " must specify a ref or value");
         }
+    }
+
+    private void parseConstructorArgumentElements(Element beanElement, BeanDefinition beanDefinition) {
+        Iterator elementIterator = beanElement.elementIterator(CONSTRUCTOR_ARG_ELEMENT);
+        while(elementIterator.hasNext()){
+            Element constructorArgumentElement = (Element) elementIterator.next();
+            parseConstructorArgumentElement(constructorArgumentElement, beanDefinition);
+        }
+    }
+
+    private void parseConstructorArgumentElement(Element constructorArgumentElement, BeanDefinition beanDefinition) {
+        String propertyType = constructorArgumentElement.attributeValue(TYPE_ATTRIBUTE);
+        String propertyName = constructorArgumentElement.attributeValue(NAME_ATTRIBUTE);
+        Object value = parsePropertyValue(constructorArgumentElement, beanDefinition, null);
+        ConstructorArgument.ValueHolder valueHolder = new ConstructorArgument.ValueHolder(value);
+        if (StringUtils.hasLength(propertyType)) {
+            valueHolder.setType(propertyType);
+        }
+        if (StringUtils.hasLength(propertyName)) {
+            valueHolder.setName(propertyName);
+        }
+        beanDefinition.getConstructorArgument().addArgumentValue(valueHolder);
     }
 }

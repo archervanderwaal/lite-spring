@@ -9,6 +9,7 @@ import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
 import me.stormma.litespring.utils.ClassUtils;
 import me.stormma.litespring.utils.CollectionUtils;
 import me.stormma.litespring.utils.StringUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 
 import java.beans.BeanInfo;
@@ -80,7 +81,7 @@ public class DefaultBeanFactory
     private Object createBean(BeanDefinition beanDefinition) {
         // create bean's instance
         Object bean = instantiateBean(beanDefinition);
-        // populate bean's property
+        // populate bean's property, also can be use populateBeanUseCommonsBeanUtils
         populateBean(beanDefinition, bean);
         return bean;
     }
@@ -120,13 +121,56 @@ public class DefaultBeanFactory
                                     + " error property is '" + populatePossibleErrorProperty + "'");
             }
         }
+
+    }
+
+    @Deprecated
+    private void populateBeanUseCommonsBeanUtils(BeanDefinition beanDefinition, Object bean) {
+        // get bean's all property values, configuration in xml, such as: <property name = "dao" ref = "dao" /> or
+        // <property name = "name" value = "storm">
+        List<PropertyValue> propertyValues = beanDefinition.getPropertyValues();
+        if (CollectionUtils.isNotNullOrEmpty(propertyValues)) {
+            // create BeanDefinitionValueResolver
+            BeanDefinitionValueResolver resolver = new BeanDefinitionValueResolver(this);
+            // get a simple type converter
+            SimpleTypeConverter typeConverter = new SimpleTypeConverter();
+            String populatePossibleErrorProperty = null;
+            try {
+                for (PropertyValue propertyValue : propertyValues) {
+                    String propertyName = propertyValue.getName();
+                    // originalValue instanceOf RuntimeBeanReference or TypedStringValue
+                    // (name and Original value) attribute make up a instance of PropertyValue
+                    Object originalValue = propertyValue.getValue();
+                    // resolvedValue, if <bean> config is <property name="userDao" ref="userDao">,
+                    // so resolvedValue is instance of UserDao, but if TypedStringValue, resolvedValue is itself.
+                    Object resolvedValue = resolver.resolveValueIfNecessary(originalValue);
+                    populatePossibleErrorProperty = propertyName;
+                    BeanUtils.setProperty(bean, propertyName, resolvedValue);
+                }
+            } catch (Exception e) {
+                logger.error("populate bean failed, " + e.getMessage());
+                throw new BeanCreationException("failed to populate instance of class " + bean.getClass().getName()
+                        + " error property is '" + populatePossibleErrorProperty + "'");
+            }
+        }
     }
 
     private Object instantiateBean(BeanDefinition beanDefinition) {
+        if (beanDefinition.hasConstructorArgumentValues()) {
+            ConstructorResolver resolver = new ConstructorResolver(this);
+            return resolver.autowireConstructor(beanDefinition);
+        }
         ClassLoader classLoader = this.getClassLoader();
         String beanClassName = beanDefinition.getBeanClassName();
         try {
-            Class<?> beanClass = classLoader.loadClass(beanClassName);
+            Class<?> beanClass;
+            Class<?> cacheBeanClass = beanDefinition.getBeanClass();
+            if (Objects.isNull(cacheBeanClass)) {
+                beanClass = classLoader.loadClass(beanClassName);
+                beanDefinition.setBeanClass(beanClass);
+            } else {
+                beanClass = cacheBeanClass;
+            }
             // non-parametric constructor
             return beanClass.newInstance();
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package me.stormma.litespring.beans.factory.support;
 
+import me.stormma.litespring.beans.factory.BeanFactory;
 import me.stormma.litespring.beans.factory.config.RuntimeBeanReference;
 import me.stormma.litespring.beans.factory.config.TypedStringValue;
 
@@ -8,9 +9,9 @@ import me.stormma.litespring.beans.factory.config.TypedStringValue;
  */
 public class BeanDefinitionValueResolver {
 
-    private final DefaultBeanFactory factory;
+    private final BeanFactory factory;
 
-    public BeanDefinitionValueResolver(final DefaultBeanFactory factory) {
+    public BeanDefinitionValueResolver(final BeanFactory factory) {
         this.factory = factory;
     }
 

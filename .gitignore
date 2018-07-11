@@ -28,3 +28,5 @@ ynDocuments/
 atlassian-ide-plugin.xml
 src/main/resources/static/assets/
 src/main/resources/static/index.html
+
+/javadoc/

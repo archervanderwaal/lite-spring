@@ -2,8 +2,10 @@ package me.stormma.litespring.beans.factory.support;
 
 import me.stormma.litespring.beans.BeanDefinition;
 import me.stormma.litespring.beans.BeanScope;
+import me.stormma.litespring.beans.ConstructorArgument;
 import me.stormma.litespring.beans.PropertyValue;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +26,20 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private List<PropertyValue> propertyValues;
 
+    private ConstructorArgument constructorArgument;
+
+    private SoftReference<Class<?>> beanClass;
+
     public GenericBeanDefinition(String beanId, String beanClassName) {
         this.beanId = beanId;
         this.beanClassName = beanClassName;
         this.propertyValues = new ArrayList<>();
+        this.constructorArgument = new ConstructorArgument();
+    }
+
+    @Override
+    public String getBeanId() {
+        return beanId;
     }
 
     public String getBeanClassName() {
@@ -59,5 +71,25 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public List<PropertyValue> getPropertyValues() {
         return this.propertyValues;
+    }
+
+    @Override
+    public ConstructorArgument getConstructorArgument() {
+        return this.constructorArgument;
+    }
+
+    @Override
+    public Class<?> getBeanClass() {
+        return java.util.Objects.isNull(this.beanClass) ? null : this.beanClass.get();
+    }
+
+    @Override
+    public void setBeanClass(Class<?> beanClass) {
+        this.beanClass = new SoftReference<>(beanClass);
+    }
+
+    @Override
+    public boolean hasConstructorArgumentValues() {
+        return !this.constructorArgument.isEmpty();
     }
 }
