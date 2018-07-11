@@ -163,14 +163,8 @@ public class DefaultBeanFactory
         ClassLoader classLoader = this.getClassLoader();
         String beanClassName = beanDefinition.getBeanClassName();
         try {
-            Class<?> beanClass;
-            Class<?> cacheBeanClass = beanDefinition.getBeanClass();
-            if (Objects.isNull(cacheBeanClass)) {
-                beanClass = classLoader.loadClass(beanClassName);
-                beanDefinition.setBeanClass(beanClass);
-            } else {
-                beanClass = cacheBeanClass;
-            }
+            Class<?> beanClass = Objects.isNull(beanDefinition.getBeanClass())
+                    ? beanDefinition.resolveBeanClass(this) : beanDefinition.getBeanClass();
             // non-parametric constructor
             return beanClass.newInstance();
         } catch (Exception e) {

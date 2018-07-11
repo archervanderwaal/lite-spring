@@ -2,28 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bd777cb-d561-4a85-8b01-18f406c2e035" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/ConstructorArgument.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/ConstructorResolver.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/ApplicationContextTestV3.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/BeanDefinitionTestV3.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/ConstructorResolverTestV3.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/entity/AccountDao.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/entity/ItemDao.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/entity/PetStoreService.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/entity/package-info.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/package-info.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/resources/petstore-v3.xml" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/lite-spring.iml" afterPath="$PROJECT_DIR$/lite-spring.iml" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/V3AllTests.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/BeanDefinition.java" afterPath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/BeanDefinition.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/BeanDefinitionValueResolver.java" afterPath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/BeanDefinitionValueResolver.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/ConstructorResolver.java" afterPath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/ConstructorResolver.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/DefaultBeanFactory.java" afterPath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/DefaultBeanFactory.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/GenericBeanDefinition.java" afterPath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/GenericBeanDefinition.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/xml/XmlBeanDefinitionReader.java" afterPath="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/xml/XmlBeanDefinitionReader.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/AllTests.java" afterPath="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/AllTests.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -39,13 +23,35 @@
       <file leaf-file-name="ConstructorResolver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/ConstructorResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="55" column="36" lean-forward="false" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+            <state relative-caret-position="322">
+              <caret line="39" column="53" lean-forward="true" selection-start-line="39" selection-start-column="53" selection-end-line="39" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#847#848#0" expanded="true" />
                 <element signature="e#893#894#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="V3AllTests.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/V3AllTests.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AllTests.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/AllTests.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -58,26 +64,6 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="petstore-v1.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/resources/petstore-v1.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="petstore-v2.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/resources/petstore-v2.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="7" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="19" selection-end-column="8" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -99,9 +85,11 @@
       <file leaf-file-name="BeanDefinition.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/BeanDefinition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="69" column="38" lean-forward="false" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="38" />
-              <folding />
+            <state relative-caret-position="258">
+              <caret line="76" column="7" lean-forward="true" selection-start-line="76" selection-start-column="7" selection-end-line="76" selection-end-column="7" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -121,23 +109,25 @@
       <file leaf-file-name="DefaultBeanFactory.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/DefaultBeanFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="160" column="19" lean-forward="true" selection-start-line="160" selection-start-column="19" selection-end-line="160" selection-end-column="19" />
+            <state relative-caret-position="274">
+              <caret line="168" column="43" lean-forward="true" selection-start-line="168" selection-start-column="43" selection-end-line="168" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#8559#8560#0" expanded="true" />
-                <element signature="e#8605#8606#0" expanded="true" />
+                <element signature="e#8379#8380#0" expanded="true" />
+                <element signature="e#8425#8426#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApplicationContextTestV3.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ApplicationContextTestV3.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/ApplicationContextTestV3.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="21" column="49" lean-forward="true" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
-              <folding />
+            <state relative-caret-position="30">
+              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -145,23 +135,24 @@
       <file leaf-file-name="GenericBeanDefinition.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/GenericBeanDefinition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-953">
-              <caret line="2" column="39" lean-forward="false" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
+            <state relative-caret-position="67">
+              <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding>
-                <element signature="e#1114#1115#0" expanded="true" />
-                <element signature="e#1143#1144#0" expanded="true" />
-                <element signature="e#1363#1364#0" expanded="true" />
-                <element signature="e#1402#1403#0" expanded="true" />
-                <element signature="e#1708#1709#0" expanded="true" />
-                <element signature="e#1741#1742#0" expanded="true" />
-                <element signature="e#1924#1925#0" expanded="true" />
-                <element signature="e#1971#1972#0" expanded="true" />
-                <element signature="e#2023#2024#0" expanded="true" />
-                <element signature="e#2116#2117#0" expanded="true" />
-                <element signature="e#2182#2183#0" expanded="true" />
-                <element signature="e#2245#2246#0" expanded="true" />
-                <element signature="e#2312#2313#0" expanded="true" />
-                <element signature="e#2370#2371#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#1281#1282#0" expanded="true" />
+                <element signature="e#1310#1311#0" expanded="true" />
+                <element signature="e#1530#1531#0" expanded="true" />
+                <element signature="e#1569#1570#0" expanded="true" />
+                <element signature="e#1875#1876#0" expanded="true" />
+                <element signature="e#1908#1909#0" expanded="true" />
+                <element signature="e#2091#2092#0" expanded="true" />
+                <element signature="e#2138#2139#0" expanded="true" />
+                <element signature="e#2190#2191#0" expanded="true" />
+                <element signature="e#2283#2284#0" expanded="true" />
+                <element signature="e#2855#2856#0" expanded="true" />
+                <element signature="e#2918#2919#0" expanded="true" />
+                <element signature="e#2985#2986#0" expanded="true" />
+                <element signature="e#3043#3044#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -198,7 +189,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/test/resources/petstore-v1.xml" />
         <option value="$PROJECT_DIR$/src/test/java/me/stormma/litespring/service/v1/BeanFactoryTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/me/stormma/litespring/service/v1/ApplicationContextTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/core/io/Resource.java" />
@@ -232,7 +222,6 @@
         <option value="$PROJECT_DIR$/src/test/java/me/stormma/litespring/service/v2/TestSuiteV2.java" />
         <option value="$PROJECT_DIR$/src/test/java/me/stormma/litespring/service/v2/BeanDefinitionTestV2.java" />
         <option value="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v2/BeanDefinitionTestV2.java" />
-        <option value="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/AllTests.java" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/pom.xml" />
@@ -243,12 +232,14 @@
         <option value="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/ConstructorResolverTestV3.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/BeanDefinitionValueResolver.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/xml/XmlBeanDefinitionReader.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/ConstructorResolver.java" />
         <option value="$PROJECT_DIR$/src/test/resources/petstore-v3.xml" />
         <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/ConstructorArgument.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/GenericBeanDefinition.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/BeanDefinition.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/DefaultBeanFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/GenericBeanDefinition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/ConstructorResolver.java" />
+        <option value="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/V3AllTests.java" />
+        <option value="$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/AllTests.java" />
       </list>
     </option>
   </component>
@@ -708,7 +699,7 @@
       <option name="presentableId" value="Default" />
       <updated>1531116834144</updated>
       <workItem from="1531116839474" duration="39533000" />
-      <workItem from="1531293088922" duration="11471000" />
+      <workItem from="1531293088922" duration="12233000" />
     </task>
     <servers />
   </component>
@@ -719,11 +710,11 @@
     <history-entry file="ApplicationContextTestV3_testGetBeanProperty - 2018.07.11 at 22h 11m 12s.xml">
       <configuration name="ApplicationContextTestV3.testGetBeanProperty" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="ApplicationContextTestV3_testGetBeanProperty - 2018.07.11 at 22h 22m 30s.xml">
+      <configuration name="ApplicationContextTestV3.testGetBeanProperty" configurationId="JUnit" />
+    </history-entry>
     <history-entry file="BeanDefinitionTestV3 - 2018.07.11 at 18h 04m 06s.xml">
       <configuration name="BeanDefinitionTestV3" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BeanDefinitionTestV3_testConstructorArgument - 2018.07.11 at 16h 34m 25s.xml">
-      <configuration name="BeanDefinitionTestV3.testConstructorArgument" configurationId="JUnit" />
     </history-entry>
     <history-entry file="BeanDefinitionTestV3_testConstructorArgument - 2018.07.11 at 16h 34m 47s.xml">
       <configuration name="BeanDefinitionTestV3.testConstructorArgument" configurationId="JUnit" />
@@ -745,7 +736,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51004000" />
+    <option name="totallyTimeSpent" value="51766000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -822,13 +813,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v2/CustomBooleanEditorTestV2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="23" column="38" lean-forward="true" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/core/io/FileSystemResource.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -961,13 +945,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/AllTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="25" lean-forward="false" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -1196,10 +1173,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/ApplicationContextTestV3.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/GenericBeanDefinition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1281#1282#0" expanded="true" />
+            <element signature="e#1310#1311#0" expanded="true" />
+            <element signature="e#1530#1531#0" expanded="true" />
+            <element signature="e#1569#1570#0" expanded="true" />
+            <element signature="e#1875#1876#0" expanded="true" />
+            <element signature="e#1908#1909#0" expanded="true" />
+            <element signature="e#2091#2092#0" expanded="true" />
+            <element signature="e#2138#2139#0" expanded="true" />
+            <element signature="e#2190#2191#0" expanded="true" />
+            <element signature="e#2283#2284#0" expanded="true" />
+            <element signature="e#2855#2856#0" expanded="true" />
+            <element signature="e#2918#2919#0" expanded="true" />
+            <element signature="e#2985#2986#0" expanded="true" />
+            <element signature="e#3043#3044#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/BeanDefinition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="76" column="7" lean-forward="true" selection-start-line="76" selection-start-column="7" selection-end-line="76" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/DefaultBeanFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="168" column="43" lean-forward="true" selection-start-line="168" selection-start-column="43" selection-end-line="168" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8379#8380#0" expanded="true" />
+            <element signature="e#8425#8426#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/ConstructorResolver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="55" column="36" lean-forward="false" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+        <state relative-caret-position="322">
+          <caret line="39" column="53" lean-forward="true" selection-start-line="39" selection-start-column="53" selection-end-line="39" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#847#848#0" expanded="true" />
@@ -1208,53 +1241,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/BeanDefinition.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/V3AllTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="69" column="38" lean-forward="false" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/DefaultBeanFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="160" column="19" lean-forward="true" selection-start-line="160" selection-start-column="19" selection-end-line="160" selection-end-column="19" />
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8559#8560#0" expanded="true" />
-            <element signature="e#8605#8606#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/stormma/litespring/beans/factory/support/GenericBeanDefinition.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/AllTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-953">
-          <caret line="2" column="39" lean-forward="false" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
-          <folding>
-            <element signature="e#1114#1115#0" expanded="true" />
-            <element signature="e#1143#1144#0" expanded="true" />
-            <element signature="e#1363#1364#0" expanded="true" />
-            <element signature="e#1402#1403#0" expanded="true" />
-            <element signature="e#1708#1709#0" expanded="true" />
-            <element signature="e#1741#1742#0" expanded="true" />
-            <element signature="e#1924#1925#0" expanded="true" />
-            <element signature="e#1971#1972#0" expanded="true" />
-            <element signature="e#2023#2024#0" expanded="true" />
-            <element signature="e#2116#2117#0" expanded="true" />
-            <element signature="e#2182#2183#0" expanded="true" />
-            <element signature="e#2245#2246#0" expanded="true" />
-            <element signature="e#2312#2313#0" expanded="true" />
-            <element signature="e#2370#2371#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/me/stormma/litespring/test/v3/ApplicationContextTestV3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="21" column="49" lean-forward="true" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
+        <state relative-caret-position="165">
+          <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
           <folding />
         </state>
       </provider>

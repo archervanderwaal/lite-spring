@@ -4,10 +4,13 @@ import me.stormma.litespring.beans.BeanDefinition;
 import me.stormma.litespring.beans.BeanScope;
 import me.stormma.litespring.beans.ConstructorArgument;
 import me.stormma.litespring.beans.PropertyValue;
+import me.stormma.litespring.beans.factory.BeanCreationException;
+import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author stormma stormmaybin@gmail.com
@@ -81,6 +84,19 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public Class<?> getBeanClass() {
         return java.util.Objects.isNull(this.beanClass) ? null : this.beanClass.get();
+    }
+
+    public Class<?> resolveBeanClass(ConfigurableBeanFactory beanFactory) {
+        Class<?> _beanClass = null;
+        if (Objects.isNull(getBeanClass())) {
+            // reload
+            try {
+                setBeanClass(_beanClass = beanFactory.getClassLoader().loadClass(this.beanClassName));
+            } catch (ClassNotFoundException e) {
+                throw new BeanCreationException("create bean for " + beanClassName + " failed.");
+            }
+        }
+        return _beanClass;
     }
 
     @Override

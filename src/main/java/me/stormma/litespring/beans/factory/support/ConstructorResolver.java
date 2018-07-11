@@ -30,16 +30,8 @@ public class ConstructorResolver {
     public Object autowireConstructor(final BeanDefinition beanDefinition) {
         Constructor<?> constructorToUse = null;
         Object[] argsToUse = null;
-        Class<?> beanClass;
-        try {
-            beanClass = beanDefinition.getBeanClass();
-            if (Objects.isNull(beanClass)) {
-                beanClass = this.beanFactory.getClassLoader().loadClass(beanDefinition.getBeanClassName());
-                beanDefinition.setBeanClass(beanClass);
-            }
-        } catch (ClassNotFoundException e) {
-            throw new BeanCreationException(beanDefinition.getBeanId(), "Instantiation of bean failed, can't resolve class", e);
-        }
+        Class<?> beanClass = Objects.isNull(beanDefinition.getBeanClass())
+                ? beanDefinition.resolveBeanClass(this.beanFactory) : beanDefinition.getBeanClass();
         Constructor<?>[] candidates = beanClass.getConstructors();
         BeanDefinitionValueResolver valueResolver =
                 new BeanDefinitionValueResolver(this.beanFactory);

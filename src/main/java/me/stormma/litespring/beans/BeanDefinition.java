@@ -1,5 +1,7 @@
 package me.stormma.litespring.beans;
 
+import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
+
 import java.util.List;
 
 /**
@@ -71,4 +73,10 @@ public interface BeanDefinition {
      * @return
      */
     boolean hasConstructorArgumentValues();
+
+    /**
+     * @param beanFactory
+     * @return
+     */
+    Class<?> resolveBeanClass(ConfigurableBeanFactory beanFactory);
 }
