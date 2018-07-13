@@ -22,6 +22,11 @@ public class FileSystemResource implements Resource {
         this.file = new File(this.path);
     }
 
+    public FileSystemResource(final File file) {
+        this.file = file;
+        this.path = this.file.getPath();
+    }
+
     @Override
     public InputStream getInputStream() throws FileNotFoundException {
         return new FileInputStream(this.file);
@@ -29,7 +34,7 @@ public class FileSystemResource implements Resource {
 
     @Override
     public String getDescription() {
-        return "configuration file in [" + this.file.getAbsolutePath() + "]";
+        return "Resource file in [" + this.file.getAbsolutePath() + "]";
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ClassPathResource implements Resource {
 
     @Override
     public String getDescription() {
-        return "configuration file in [" + this.path + "]";
+        return "Resource file in [" + this.path + "]";
     }
 
     @Override
