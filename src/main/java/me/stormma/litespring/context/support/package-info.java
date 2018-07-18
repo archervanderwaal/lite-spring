@@ -1,4 +1,4 @@
 /**
  * @author stormma stormmaybin@gmail.com
  */
-package me.stormma.litespring.beans.context;
+package me.stormma.litespring.context.support;

@@ -1,6 +1,12 @@
 package me.stormma.litespring.utils;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.StringTokenizer;
+import java.util.List;
 
 /**
  * @author stormma stormmaybin@gmail.com
@@ -56,5 +62,43 @@ public class StringUtils {
             }
         }
         return sb.toString();
+    }
+
+    public static String[] tokenizeToStringArray(String str, String delimiters) {
+        return tokenizeToStringArray(str, delimiters, true, true);
+    }
+
+    @Nullable
+    public static String[] tokenizeToStringArray(
+            String str, String delimiters, boolean trimTokens, boolean ignoreEmptyTokens) {
+        if (isNull(str)) {
+            return null;
+        }
+
+        StringTokenizer st = new StringTokenizer(str, delimiters);
+        List<String> tokens = new ArrayList<String>();
+        while (st.hasMoreTokens()) {
+            String token = st.nextToken();
+            if (trimTokens) {
+                token = token.trim();
+            }
+            if (!ignoreEmptyTokens || token.length() > 0) {
+                tokens.add(token);
+            }
+        }
+        return toStringArray(tokens);
+    }
+
+    @Contract(value = "null -> true; !null -> false", pure = true)
+    private static boolean isNull(String str) {
+        return str == null;
+    }
+
+    @Contract("null -> null; !null -> !null")
+    public static String[] toStringArray(Collection<String> collection) {
+        if (collection == null) {
+            return null;
+        }
+        return collection.toArray(new String[collection.size()]);
     }
 }

@@ -1,4 +1,4 @@
-package me.stormma.litespring.beans.context.support;
+package me.stormma.litespring.context.support;
 
 import me.stormma.litespring.core.io.FileSystemResource;
 import me.stormma.litespring.core.io.Resource;

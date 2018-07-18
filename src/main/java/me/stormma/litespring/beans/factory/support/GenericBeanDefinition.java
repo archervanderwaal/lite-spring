@@ -27,17 +27,19 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private BeanScope scope = BeanScope.DEFAULT;
 
-    private List<PropertyValue> propertyValues;
+    private List<PropertyValue> propertyValues = new ArrayList<>();
 
-    private ConstructorArgument constructorArgument;
+    private ConstructorArgument constructorArgument = new ConstructorArgument();
 
     private SoftReference<Class<?>> beanClass;
+
+    public GenericBeanDefinition() {
+
+    }
 
     public GenericBeanDefinition(String beanId, String beanClassName) {
         this.beanId = beanId;
         this.beanClassName = beanClassName;
-        this.propertyValues = new ArrayList<>();
-        this.constructorArgument = new ConstructorArgument();
     }
 
     @Override
@@ -45,6 +47,17 @@ public class GenericBeanDefinition implements BeanDefinition {
         return beanId;
     }
 
+    @Override
+    public void setBeanId(String beanId) {
+        this.beanId = beanId;
+    }
+
+    @Override
+    public void setBeanClassName(String beanClassName) {
+        this.beanClassName = beanClassName;
+    }
+
+    @Override
     public String getBeanClassName() {
         return this.beanClassName;
     }

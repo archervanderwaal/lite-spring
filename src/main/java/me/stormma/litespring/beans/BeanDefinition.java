@@ -16,10 +16,21 @@ public interface BeanDefinition {
     String getBeanId();
 
     /**
+     * set bean id
+     * @param beanId
+     */
+    void setBeanId(String beanId);
+
+    /**
      * get bean's class name
      * @return
      */
     String getBeanClassName();
+
+    /**
+     * set bean class name
+     */
+    void setBeanClassName(String beanClassName);
 
     /**
      * judge bean is singleton bean?

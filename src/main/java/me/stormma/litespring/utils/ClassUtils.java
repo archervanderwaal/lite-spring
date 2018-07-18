@@ -12,6 +12,10 @@ public abstract class ClassUtils {
 
     private static final String PACKAGE_SEPARATOR = ".";
 
+    private static final String INNER_CLASS_SEPARATOR = "$";
+
+    private static final String CGLIB_CLASS_SEPARATOR = "$$";
+
     /**
      * Map with primitive wrapper type as key and corresponding primitive
      * type as value, for example: Integer.class -> int.class.
@@ -92,5 +96,16 @@ public abstract class ClassUtils {
     public static String convertResourcePathToClassName(String resourcePath) {
         Assert.assertNotNull(resourcePath, "resourcePath must be not null");
         return resourcePath.replace(PATH_SEPARATOR, PACKAGE_SEPARATOR);
+    }
+
+    public static String getShortName(String className) {
+        int lastDotIndex = className.lastIndexOf(PACKAGE_SEPARATOR);
+        int nameEndIndex = className.indexOf(CGLIB_CLASS_SEPARATOR);
+        if (nameEndIndex == -1) {
+            nameEndIndex = className.length();
+        }
+        String shortName = className.substring(lastDotIndex + 1, nameEndIndex);
+        shortName = shortName.replace(INNER_CLASS_SEPARATOR, PACKAGE_SEPARATOR);
+        return shortName;
     }
 }

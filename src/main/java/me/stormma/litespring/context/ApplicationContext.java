@@ -1,6 +1,5 @@
-package me.stormma.litespring.beans.context;
+package me.stormma.litespring.context;
 
-import me.stormma.litespring.beans.factory.BeanFactory;
 import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
 
 /**
