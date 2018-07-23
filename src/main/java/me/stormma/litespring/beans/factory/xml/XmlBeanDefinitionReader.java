@@ -9,6 +9,7 @@ import me.stormma.litespring.beans.factory.config.RuntimeBeanReference;
 import me.stormma.litespring.beans.factory.config.TypedStringValue;
 import me.stormma.litespring.beans.factory.support.BeanDefinitionRegistry;
 import me.stormma.litespring.beans.factory.support.GenericBeanDefinition;
+import me.stormma.litespring.context.annotation.ClassPathBeanDefinitionScanner;
 import me.stormma.litespring.core.io.Resource;
 import me.stormma.litespring.utils.StringUtils;
 import org.apache.log4j.Logger;
@@ -74,6 +75,21 @@ public class XmlBeanDefinitionReader {
     public static final String TYPE_ATTRIBUTE = "type";
 
     /**
+     * beans namespace
+     */
+    public static final String BEANS_NAMESPACE_URI = "http://www.springframework.org/schema/beans";
+
+    /**
+     * context namespace
+     */
+    public static final String CONTEXT_NAMESPACE_URI = "http://www.springframework.org/schema/context";
+
+    /**
+     * base package attribute
+     */
+    private static final String BASE_PACKAGE_ATTRIBUTE = "base-package";
+
+    /**
      * bean definition registry
      */
     private final BeanDefinitionRegistry registry;
@@ -104,18 +120,14 @@ public class XmlBeanDefinitionReader {
             Iterator elementIterator = root.elementIterator();
             while (elementIterator.hasNext()) {
                 Element element = (Element) elementIterator.next();
-                String beanId = element.attributeValue(ID_ATTRIBUTE);
-                String beanClassName = element.attributeValue(CLASS_ATTRIBUTE);
-                String scope = element.attributeValue(SCOPE_ATTRIBUTE);
-                BeanDefinition beanDefinition = new GenericBeanDefinition(beanId, beanClassName);
-                if (!Objects.isNull(scope)) {
-                    beanDefinition.setScope(scope.equalsIgnoreCase("singleton") ? BeanScope.SINGLETON : BeanScope.PROTOTYPE);
-                } else {
-                    beanDefinition.setScope(BeanScope.DEFAULT);
+                String namespaceUri = element.getNamespaceURI();
+                if (this.isDefaultNamespace(namespaceUri)) {
+                    // default bean
+                    parseDefaultElement(element);
+                } else if (this.isContextNamespace(namespaceUri)) {
+                    // <context:component-scan>
+                    parseComponentElement(element);
                 }
-                parseConstructorArgumentElements(element, beanDefinition);
-                parsePropertyElement(element, beanDefinition);
-                registry.registerBeanDefinition(beanId, beanDefinition);
             }
         } catch (DocumentException | FileNotFoundException e) {
             throw new BeanDefinitionStoreException("parse xml configuration file failed, " +
@@ -129,6 +141,36 @@ public class XmlBeanDefinitionReader {
                 }
             }
         }
+    }
+
+    private void parseComponentElement(Element element) {
+        String basePackages = element.attributeValue(BASE_PACKAGE_ATTRIBUTE);
+        ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(registry);
+        scanner.doScan(basePackages);
+    }
+
+    private void parseDefaultElement(Element element) {
+        String beanId = element.attributeValue(ID_ATTRIBUTE);
+        String beanClassName = element.attributeValue(CLASS_ATTRIBUTE);
+        String scope = element.attributeValue(SCOPE_ATTRIBUTE);
+        BeanDefinition beanDefinition = new GenericBeanDefinition(beanId, beanClassName);
+        if (!Objects.isNull(scope)) {
+            beanDefinition.setScope(scope.equalsIgnoreCase(
+                    "singleton") ? BeanScope.SINGLETON : BeanScope.PROTOTYPE);
+        } else {
+            beanDefinition.setScope(BeanScope.DEFAULT);
+        }
+        parseConstructorArgumentElements(element, beanDefinition);
+        parsePropertyElement(element, beanDefinition);
+        registry.registerBeanDefinition(beanId, beanDefinition);
+    }
+
+    private boolean isDefaultNamespace(String namespaceUri) {
+        return (!StringUtils.hasLength(namespaceUri) || BEANS_NAMESPACE_URI.equals(namespaceUri));
+    }
+
+    private boolean isContextNamespace(String namespaceUri) {
+        return (!StringUtils.hasLength(namespaceUri) || CONTEXT_NAMESPACE_URI.equals(namespaceUri));
     }
 
     /**
