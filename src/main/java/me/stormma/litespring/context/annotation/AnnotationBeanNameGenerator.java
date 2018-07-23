@@ -11,7 +11,6 @@ import me.stormma.litespring.utils.ClassUtils;
 import me.stormma.litespring.utils.StringUtils;
 
 import java.beans.Introspector;
-import java.util.Set;
 
 /**
  * @author stormma stormmaybin@gmail.com
@@ -38,7 +37,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
     protected String determineBeanNameFromAnnotation(AnnotatedBeanDefinition annotatedDef) {
         AnnotationMetadata amd = annotatedDef.getMetadata();
         String beanName = null;
-        AnnotationAttributes attributes = null;
+        AnnotationAttributes attributes;
         if (amd.hasAnnotation(Component.class.getName()) && (attributes = amd
                 .getAnnotationAttributes(Component.class.getName())) != null) {
             String val;
