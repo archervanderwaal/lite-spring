@@ -1,13 +1,17 @@
 package me.stormma.litespring.beans.factory.config;
 
-import me.stormma.litespring.beans.factory.BeanFactory;
+import java.util.List;
 
 /**
  * @author stormma stormmaybin@gmail.com
  */
-public interface ConfigurableBeanFactory extends BeanFactory {
+public interface ConfigurableBeanFactory extends AutowireCapableBeanFactory {
 
     void setBeanClassLoader(ClassLoader classLoader);
 
     ClassLoader getClassLoader();
+
+    void addBeanPostProcess(BeanPostProcessor beanPostProcessor);
+
+    List<BeanPostProcessor> getBeanPostProcessors();
 }

@@ -5,7 +5,10 @@ import me.stormma.litespring.beans.PropertyValue;
 import me.stormma.litespring.beans.SimpleTypeConverter;
 import me.stormma.litespring.beans.factory.BeanCreationException;
 import me.stormma.litespring.beans.factory.BeanFactory;
+import me.stormma.litespring.beans.factory.config.BeanPostProcessor;
 import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
+import me.stormma.litespring.beans.factory.config.DependencyDescriptor;
+import me.stormma.litespring.beans.factory.config.InstantiationAwareBeanPosrProcessor;
 import me.stormma.litespring.utils.ClassUtils;
 import me.stormma.litespring.utils.CollectionUtils;
 import me.stormma.litespring.utils.StringUtils;
@@ -15,6 +18,7 @@ import org.apache.log4j.Logger;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -31,6 +35,11 @@ public class DefaultBeanFactory
      * load bean definitions to map
      */
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+
+    /**
+     * bean post processors.
+     */
+    private final List<BeanPostProcessor> postProcessors = new ArrayList<>(16);
 
     private ClassLoader classLoader;
 
@@ -87,6 +96,12 @@ public class DefaultBeanFactory
     }
 
     private void populateBean(BeanDefinition beanDefinition, Object bean) {
+        for (BeanPostProcessor processor : this.getBeanPostProcessors()) {
+            if (processor instanceof InstantiationAwareBeanPosrProcessor) {
+                ((InstantiationAwareBeanPosrProcessor) processor)
+                        .postProcessPropertyValues(bean, beanDefinition.getBeanId());
+            }
+        }
         // get bean's all property values, configuration in xml, such as: <property name = "dao" ref = "dao" /> or
         // <property name = "name" value = "storm">
         List<PropertyValue> propertyValues = beanDefinition.getPropertyValues();
@@ -180,5 +195,27 @@ public class DefaultBeanFactory
     @Override
     public ClassLoader getClassLoader() {
         return this.classLoader != null ? this.classLoader : ClassUtils.getDefaultClassLoader();
+    }
+
+    @Override
+    public void addBeanPostProcess(BeanPostProcessor beanPostProcessor) {
+        this.postProcessors.add(beanPostProcessor);
+    }
+
+    @Override
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.postProcessors;
+    }
+
+    @Override
+    public Object resolveDependency(DependencyDescriptor descriptor) {
+        Class<?> typeToMatch = descriptor.getDependencyType();
+        for (BeanDefinition beanDefinition : this.beanDefinitionMap.values()) {
+            Class<?> beanClass = beanDefinition.resolveBeanClass(this);
+            if (typeToMatch.isAssignableFrom(beanClass)) {
+                return this.getBean(beanDefinition.getBeanId());
+            }
+        }
+        return null;
     }
 }

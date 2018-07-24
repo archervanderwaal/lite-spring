@@ -96,12 +96,12 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     @Override
     public Class<?> getBeanClass() {
-        return java.util.Objects.isNull(this.beanClass) ? null : this.beanClass.get();
+        return this.beanClass == null ? null : this.beanClass.get();
     }
 
     public Class<?> resolveBeanClass(ConfigurableBeanFactory beanFactory) {
         Class<?> _beanClass = null;
-        if (Objects.isNull(getBeanClass())) {
+        if (Objects.isNull(_beanClass = getBeanClass())) {
             // reload
             try {
                 setBeanClass(_beanClass = beanFactory.getClassLoader().loadClass(this.beanClassName));
