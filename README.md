@@ -7,5 +7,11 @@ purpose of this framework is to learn spring in depth.
 
 ### features
 
-1. ioc (finishing)
-2. aop (later)
+#### ioc (done)
+
+- setter injection(done)
+- constructor injection(done)
+- autowire injection(done)
+- post processor(done)
+
+#### aop (doing)
