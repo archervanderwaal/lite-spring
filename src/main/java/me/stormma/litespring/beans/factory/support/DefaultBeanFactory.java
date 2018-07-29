@@ -8,7 +8,7 @@ import me.stormma.litespring.beans.factory.BeanFactory;
 import me.stormma.litespring.beans.factory.config.BeanPostProcessor;
 import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
 import me.stormma.litespring.beans.factory.config.DependencyDescriptor;
-import me.stormma.litespring.beans.factory.config.InstantiationAwareBeanPosrProcessor;
+import me.stormma.litespring.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import me.stormma.litespring.utils.ClassUtils;
 import me.stormma.litespring.utils.CollectionUtils;
 import me.stormma.litespring.utils.StringUtils;
@@ -96,9 +96,10 @@ public class DefaultBeanFactory
     }
 
     private void populateBean(BeanDefinition beanDefinition, Object bean) {
+        // invoke postProcessProperty hook method
         for (BeanPostProcessor processor : this.getBeanPostProcessors()) {
-            if (processor instanceof InstantiationAwareBeanPosrProcessor) {
-                ((InstantiationAwareBeanPosrProcessor) processor)
+            if (processor instanceof InstantiationAwareBeanPostProcessor) {
+                ((InstantiationAwareBeanPostProcessor) processor)
                         .postProcessPropertyValues(bean, beanDefinition.getBeanId());
             }
         }

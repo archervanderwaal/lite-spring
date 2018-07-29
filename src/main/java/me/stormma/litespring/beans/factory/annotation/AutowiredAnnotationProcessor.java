@@ -3,7 +3,7 @@ package me.stormma.litespring.beans.factory.annotation;
 import me.stormma.litespring.beans.BeansException;
 import me.stormma.litespring.beans.factory.BeanCreationException;
 import me.stormma.litespring.beans.factory.config.AutowireCapableBeanFactory;
-import me.stormma.litespring.beans.factory.config.InstantiationAwareBeanPosrProcessor;
+import me.stormma.litespring.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import me.stormma.litespring.core.annotation.AnnotationUtils;
 import me.stormma.litespring.utils.ReflectionUtils;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * @author stormma stormmaybin@gmail.com
  * @since 2018/7/24
  */
-public class AutowiredAnnotationProcessor implements InstantiationAwareBeanPosrProcessor {
+public class AutowiredAnnotationProcessor implements InstantiationAwareBeanPostProcessor {
 
     private AutowireCapableBeanFactory beanFactory;
 
@@ -89,24 +89,24 @@ public class AutowiredAnnotationProcessor implements InstantiationAwareBeanPosrP
     }
 
     @Override
-    public Object beforeInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         //do nothing
         return bean;
     }
 
     @Override
-    public Object afterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         // do nothing
         return bean;
     }
 
     @Override
-    public Object beforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
+    public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
         return null;
     }
 
     @Override
-    public boolean afterInstantiation(Object bean, String beanName) throws BeansException {
+    public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
         // do nothing
         return true;
     }

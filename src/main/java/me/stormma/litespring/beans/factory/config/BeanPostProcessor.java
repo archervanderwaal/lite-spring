@@ -8,7 +8,7 @@ import me.stormma.litespring.beans.BeansException;
  */
 public interface BeanPostProcessor {
 
-    Object beforeInitialization(Object bean, String beanName) throws BeansException;
+    Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException;
 
-    Object afterInitialization(Object bean, String beanName) throws BeansException;
+    Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException;
 }
