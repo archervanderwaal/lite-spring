@@ -76,7 +76,7 @@ public class StringUtils {
         }
 
         StringTokenizer st = new StringTokenizer(str, delimiters);
-        List<String> tokens = new ArrayList<String>();
+        List<String> tokens = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
             if (trimTokens) {
@@ -99,6 +99,78 @@ public class StringUtils {
         if (collection == null) {
             return null;
         }
-        return collection.toArray(new String[collection.size()]);
+        return collection.toArray(new String[0]);
+    }
+
+    public static String replace(String inString, String oldPattern, String newPattern) {
+        if (!hasLength(inString) || !hasLength(oldPattern) || newPattern == null) {
+            return inString;
+        }
+        StringBuilder sb = new StringBuilder();
+        int pos = 0; // our position in the old string
+        int index = inString.indexOf(oldPattern);
+        // the index of an occurrence we've found, or -1
+        int patLen = oldPattern.length();
+        while (index >= 0) {
+            sb.append(inString, pos, index);
+            sb.append(newPattern);
+            pos = index + patLen;
+            index = inString.indexOf(oldPattern, pos);
+        }
+        sb.append(inString.substring(pos));
+        // remember to append any characters to the right of a match
+        return sb.toString();
+    }
+
+    @Contract("null -> new")
+    public static String[] commaDelimitedListToStringArray(String str) {
+        return delimitedListToStringArray(str, ",");
+    }
+
+    @Contract("null, _ -> new; !null, null -> new")
+    public static String[] delimitedListToStringArray(String str, String delimiter) {
+        return delimitedListToStringArray(str, delimiter, null);
+    }
+
+    @Contract("null, _, _ -> new; !null, null, _ -> new")
+    public static String[] delimitedListToStringArray(String str, String delimiter, String charsToDelete) {
+        if (str == null) {
+            return new String[0];
+        }
+        if (delimiter == null) {
+            return new String[] {str};
+        }
+        List<String> result = new ArrayList<>();
+        if ("".equals(delimiter)) {
+            for (int i = 0; i < str.length(); i++) {
+                result.add(deleteAny(str.substring(i, i + 1), charsToDelete));
+            }
+        } else {
+            int pos = 0;
+            int delPos;
+            while ((delPos = str.indexOf(delimiter, pos)) != -1) {
+                result.add(deleteAny(str.substring(pos, delPos), charsToDelete));
+                pos = delPos + delimiter.length();
+            }
+            if (str.length() > 0 && pos <= str.length()) {
+                // Add rest of String, but not in case of empty input.
+                result.add(deleteAny(str.substring(pos), charsToDelete));
+            }
+        }
+        return toStringArray(result);
+    }
+
+    public static String deleteAny(String inString, String charsToDelete) {
+        if (!hasLength(inString) || !hasLength(charsToDelete)) {
+            return inString;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < inString.length(); i++) {
+            char c = inString.charAt(i);
+            if (charsToDelete.indexOf(c) == -1) {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 }

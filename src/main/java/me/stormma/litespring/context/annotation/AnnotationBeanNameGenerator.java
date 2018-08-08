@@ -11,6 +11,7 @@ import me.stormma.litespring.utils.ClassUtils;
 import me.stormma.litespring.utils.StringUtils;
 
 import java.beans.Introspector;
+import java.util.Map;
 
 /**
  * @author stormma stormmaybin@gmail.com
@@ -41,13 +42,16 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
         if (amd.hasAnnotation(Component.class.getName()) && (attributes = amd
                 .getAnnotationAttributes(Component.class.getName())) != null) {
             String val;
-            if ((val = attributes.getString("value")) != null) {
-                if (StringUtils.hasLength(val)) {
-                    beanName = val;
-                }
+            if (isStereotypeWithNameValue(attributes) &&
+                            StringUtils.hasLength((val = attributes.getString("value")))) {
+                beanName = val;
             }
         }
         return beanName;
+    }
+
+    protected boolean isStereotypeWithNameValue(Map<String, Object> attributes) {
+        return attributes.containsKey("value");
     }
 
     /**

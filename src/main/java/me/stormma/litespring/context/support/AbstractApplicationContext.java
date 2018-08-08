@@ -1,5 +1,6 @@
 package me.stormma.litespring.context.support;
 
+import me.stormma.litespring.beans.factory.NoSuchBeanDefinitionException;
 import me.stormma.litespring.beans.factory.annotation.AutowiredAnnotationProcessor;
 import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
 import me.stormma.litespring.context.ApplicationContext;
@@ -45,5 +46,10 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
         AutowiredAnnotationProcessor processor = new AutowiredAnnotationProcessor();
         processor.setBeanFactory(factory);
         this.factory.addBeanPostProcess(processor);
+    }
+
+    @Override
+    public Class<?> getType(String beanName) throws NoSuchBeanDefinitionException {
+        return this.factory.getType(beanName);
     }
 }

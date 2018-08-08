@@ -8,4 +8,6 @@ import me.stormma.litespring.beans.BeanDefinition;
 public interface BeanFactory {
 
     Object getBean(String petStore);
+
+    Class<?> getType(String beanName) throws NoSuchBeanDefinitionException;
 }

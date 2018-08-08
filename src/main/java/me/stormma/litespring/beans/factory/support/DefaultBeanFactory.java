@@ -5,6 +5,7 @@ import me.stormma.litespring.beans.PropertyValue;
 import me.stormma.litespring.beans.SimpleTypeConverter;
 import me.stormma.litespring.beans.factory.BeanCreationException;
 import me.stormma.litespring.beans.factory.BeanFactory;
+import me.stormma.litespring.beans.factory.NoSuchBeanDefinitionException;
 import me.stormma.litespring.beans.factory.config.BeanPostProcessor;
 import me.stormma.litespring.beans.factory.config.ConfigurableBeanFactory;
 import me.stormma.litespring.beans.factory.config.DependencyDescriptor;
@@ -218,5 +219,14 @@ public class DefaultBeanFactory
             }
         }
         return null;
+    }
+
+    @Override
+    public Class<?> getType(String beanName) throws NoSuchBeanDefinitionException {
+        BeanDefinition beanDefinition = this.getBeanDefinition(beanName);
+        if (Objects.isNull(beanDefinition)) {
+            throw new NoSuchBeanDefinitionException(beanName);
+        }
+        return beanDefinition.resolveBeanClass(this);
     }
 }

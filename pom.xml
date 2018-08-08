@@ -30,6 +30,7 @@
         <commons-logging.version>1.2</commons-logging.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <asm.version>3.3.1</asm.version>
+        <aspectj.version>1.8.13</aspectj.version>
     </properties>
 
     <developers>
@@ -83,6 +84,12 @@
             <groupId>asm</groupId>
             <artifactId>asm</artifactId>
             <version>${asm.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
         </dependency>
     </dependencies>
 </project>
