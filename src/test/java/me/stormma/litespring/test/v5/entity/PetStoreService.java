@@ -30,12 +30,10 @@ public class PetStoreService {
 
 
     public void placeOrder() {
-        System.out.println("place order");
         MessageTracker.addMessage("place order");
     }
 
     public void placeOrderWithException() {
-        System.out.println("place order with exception");
         MessageTracker.addMessage("place order with exception");
         throw new RuntimeException();
     }

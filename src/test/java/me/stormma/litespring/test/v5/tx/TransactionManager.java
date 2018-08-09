@@ -8,17 +8,14 @@ import me.stormma.litespring.test.v5.util.MessageTracker;
 public class TransactionManager {
 
     public void start() {
-        System.out.println("start tx");
         MessageTracker.addMessage("start tx");
     }
 
-    public void commit(){
-        System.out.println("commit tx");
+    public void commit() {
         MessageTracker.addMessage("commit tx");
     }
 
-    public void rollback(){
-        System.out.println("rollback tx");
+    public void rollback() {
         MessageTracker.addMessage("rollback tx");
     }
 }

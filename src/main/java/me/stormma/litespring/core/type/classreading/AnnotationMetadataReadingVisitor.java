@@ -20,7 +20,6 @@ public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisito
 
     private final Map<String, AnnotationAttributes> attributesMap = new LinkedHashMap<>(4);
 
-
     @Override
     public AnnotationVisitor visitAnnotation(String s, boolean b) {
         String annotationName = Type.getType(s).getClassName();

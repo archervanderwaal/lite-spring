@@ -1,5 +1,6 @@
 package me.stormma.litespring.core.type.classreading;
 
+import me.stormma.litespring.asm.AsmInfo;
 import me.stormma.litespring.core.annotation.AnnotationAttributes;
 import org.objectweb.asm.AnnotationVisitor;
 
@@ -9,7 +10,7 @@ import java.util.Map;
  * @author stormma stormmaybin@gmail.com
  * @since 2018/7/18
  */
-public class AnnotationAttributesReadingVisitor implements AnnotationVisitor {
+public class AnnotationAttributesReadingVisitor extends AnnotationVisitor {
 
     private final String annotationType;
 
@@ -18,6 +19,7 @@ public class AnnotationAttributesReadingVisitor implements AnnotationVisitor {
     AnnotationAttributes attributes = new AnnotationAttributes();
 
     public AnnotationAttributesReadingVisitor(String annotationType, Map<String, AnnotationAttributes> attributesMap) {
+        super(AsmInfo.ASM_VERSION);
         this.annotationType = annotationType;
         this.attributesMap = attributesMap;
     }
@@ -25,21 +27,6 @@ public class AnnotationAttributesReadingVisitor implements AnnotationVisitor {
     @Override
     public void visit(String s, Object o) {
         this.attributes.put(s, o);
-    }
-
-    @Override
-    public void visitEnum(String s, String s1, String s2) {
-
-    }
-
-    @Override
-    public AnnotationVisitor visitAnnotation(String s, String s1) {
-        return null;
-    }
-
-    @Override
-    public AnnotationVisitor visitArray(String s) {
-        return null;
     }
 
     @Override

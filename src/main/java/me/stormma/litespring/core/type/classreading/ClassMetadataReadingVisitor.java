@@ -1,5 +1,6 @@
 package me.stormma.litespring.core.type.classreading;
 
+import me.stormma.litespring.asm.AsmInfo;
 import me.stormma.litespring.core.type.ClassMetadata;
 import me.stormma.litespring.utils.ClassUtils;
 import org.objectweb.asm.*;
@@ -8,7 +9,7 @@ import org.objectweb.asm.*;
  * @author stormma stormmaybin@gmail.com
  * @since 2018/7/13
  */
-public class ClassMetadataReadingVisitor implements ClassVisitor, ClassMetadata {
+public class ClassMetadataReadingVisitor extends ClassVisitor implements ClassMetadata {
 
     private String className;
 
@@ -21,6 +22,10 @@ public class ClassMetadataReadingVisitor implements ClassVisitor, ClassMetadata 
     private String superClassName;
 
     private String[] interfaces;
+
+    public ClassMetadataReadingVisitor() {
+        super(AsmInfo.ASM_VERSION);
+    }
 
 
     @Override
@@ -36,46 +41,6 @@ public class ClassMetadataReadingVisitor implements ClassVisitor, ClassMetadata 
         for (int i = 0; i < interfaces.length; i++) {
             this.interfaces[i] = ClassUtils.convertResourcePathToClassName(interfaces[i]);
         }
-    }
-
-    @Override
-    public void visitSource(String s, String s1) {
-
-    }
-
-    @Override
-    public void visitOuterClass(String s, String s1, String s2) {
-
-    }
-
-    @Override
-    public AnnotationVisitor visitAnnotation(String s, boolean b) {
-        return null;
-    }
-
-    @Override
-    public void visitAttribute(Attribute attribute) {
-
-    }
-
-    @Override
-    public void visitInnerClass(String s, String s1, String s2, int i) {
-
-    }
-
-    @Override
-    public FieldVisitor visitField(int i, String s, String s1, String s2, Object o) {
-        return null;
-    }
-
-    @Override
-    public MethodVisitor visitMethod(int i, String s, String s1, String s2, String[] strings) {
-        return null;
-    }
-
-    @Override
-    public void visitEnd() {
-
     }
 
     public String getClassName() {
