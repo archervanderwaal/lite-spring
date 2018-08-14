@@ -70,17 +70,6 @@ public class AspectJExpressionPointcut implements MethodMatcher, Pointcut {
         }
         catch (ReflectionWorld.ReflectionWorldException ex) {
             throw new RuntimeException("not implemented yet");
-			/*
-			try {
-				fallbackExpression = getFallbackPointcutExpression(methodToMatch.getDeclaringClass());
-				if (fallbackExpression != null) {
-					shadowMatch = fallbackExpression.matchesMethodExecution(methodToMatch);
-				}
-			}
-			catch (ReflectionWorldException ex2) {
-				fallbackExpression = null;
-			}
-			*/
         }
         return shadowMatch;
     }
@@ -100,14 +89,6 @@ public class AspectJExpressionPointcut implements MethodMatcher, Pointcut {
         PointcutParser parser = PointcutParser
                 .getPointcutParserSupportingSpecifiedPrimitivesAndUsingSpecifiedClassLoaderForResolution(
                         SUPPORTED_PRIMITIVES, classLoader);
-
-		/*
-		PointcutParameter[] pointcutParameters = new PointcutParameter[this.pointcutParameterNames.length];
-		for (int i = 0; i < pointcutParameters.length; i++) {
-			pointcutParameters[i] = parser.createPointcutParameter(
-					this.pointcutParameterNames[i], this.pointcutParameterTypes[i]);
-		}
-		*/
         return parser.parsePointcutExpression(replaceBooleanOperators(getExpression()),
                 null, new PointcutParameter[0]);
     }
