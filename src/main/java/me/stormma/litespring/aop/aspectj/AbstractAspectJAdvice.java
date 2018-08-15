@@ -4,7 +4,6 @@ import me.stormma.litespring.aop.Advice;
 import me.stormma.litespring.aop.Pointcut;
 import org.aopalliance.intercept.MethodInvocation;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**

@@ -1,6 +1,5 @@
 package me.stormma.litespring.aop.aspectj;
 
-import me.stormma.litespring.aop.Advice;
 import me.stormma.litespring.aop.Pointcut;
 import org.aopalliance.intercept.MethodInvocation;
 
