@@ -27,7 +27,7 @@ public class AbstractAspectJAdvice implements Advice {
         this.adviceMethod.invoke(this.adviceObject);
     }
 
-    @Override
+    @OverrideDataSource
     public Pointcut getPointcut() {
         return this.pointcut;
     }
