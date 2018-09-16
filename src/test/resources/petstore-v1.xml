@@ -5,11 +5,11 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- bean definitions here -->
-    <bean id="petStore" class="me.stormma.litespring.test.v1.entity.PetStoreService"/>
+    <bean id="petStore" class="com.archervanderwaal.litespring.test.v1.entity.PetStoreService"/>
 
     <!-- invalid bean definition -->
     <bean id="invalidBean" class="invalid"/>
 
     <!-- prototype bean definition -->
-    <bean id="petStorePrototype" class="me.stormma.litespring.test.v1.entity.PetStoreService" scope="prototype"/>
+    <bean id="petStorePrototype" class="com.archervanderwaal.litespring.test.v1.entity.PetStoreService" scope="prototype"/>
 </beans>
