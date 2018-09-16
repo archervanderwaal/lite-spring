@@ -86,8 +86,13 @@ public interface BeanDefinition {
     boolean hasConstructorArgumentValues();
 
     /**
-     * @param beanFactory
+     * @param classLoader
      * @return
      */
-    Class<?> resolveBeanClass(ConfigurableBeanFactory beanFactory);
+    Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException;
+
+    /**
+     * @return
+     */
+    boolean hasBeanClass();
 }

@@ -180,10 +180,7 @@ public class DefaultBeanFactory
         ClassLoader classLoader = this.getClassLoader();
         String beanClassName = beanDefinition.getBeanClassName();
         try {
-            Class<?> beanClass = Objects.isNull(beanDefinition.getBeanClass())
-                    ? beanDefinition.resolveBeanClass(this) : beanDefinition.getBeanClass();
-            // non-parametric constructor
-            return beanClass.newInstance();
+            return classLoader.loadClass(beanClassName).newInstance();
         } catch (Exception e) {
             throw new BeanCreationException("create bean for " + beanClassName + " failed.");
         }
@@ -213,7 +210,9 @@ public class DefaultBeanFactory
     public Object resolveDependency(DependencyDescriptor descriptor) {
         Class<?> typeToMatch = descriptor.getDependencyType();
         for (BeanDefinition beanDefinition : this.beanDefinitionMap.values()) {
-            Class<?> beanClass = beanDefinition.resolveBeanClass(this);
+            // resolveBeanClass
+            resolveBeanClass(beanDefinition);
+            Class<?> beanClass = beanDefinition.getBeanClass();
             if (typeToMatch.isAssignableFrom(beanClass)) {
                 return this.getBean(beanDefinition.getBeanId());
             }
@@ -227,6 +226,17 @@ public class DefaultBeanFactory
         if (Objects.isNull(beanDefinition)) {
             throw new NoSuchBeanDefinitionException(beanName);
         }
-        return beanDefinition.resolveBeanClass(this);
+        resolveBeanClass(beanDefinition);
+        return beanDefinition.getBeanClass();
+    }
+
+    private void resolveBeanClass(BeanDefinition beanDefinition) {
+        if(!beanDefinition.hasBeanClass()){
+            try {
+                beanDefinition.resolveBeanClass(this.getClassLoader());
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException("can't load class:" + beanDefinition.getBeanClassName());
+            }
+        }
     }
 }

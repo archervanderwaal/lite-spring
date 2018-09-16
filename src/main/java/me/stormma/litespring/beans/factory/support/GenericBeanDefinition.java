@@ -31,7 +31,7 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private ConstructorArgument constructorArgument = new ConstructorArgument();
 
-    private SoftReference<Class<?>> beanClass;
+    private Class<?> beanClass;
 
     public GenericBeanDefinition() {
 
@@ -96,29 +96,35 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     @Override
     public Class<?> getBeanClass() {
-        return this.beanClass == null ? null : this.beanClass.get();
+        if(this.beanClass == null){
+            throw new IllegalStateException(
+                    "Bean class name [" + this.getBeanClassName() + "] has not been resolved into an actual Class");
+        }
+        return this.beanClass;
     }
 
-    public Class<?> resolveBeanClass(ConfigurableBeanFactory beanFactory) {
-        Class<?> _beanClass = null;
-        if (Objects.isNull(_beanClass = getBeanClass())) {
-            // reload
-            try {
-                setBeanClass(_beanClass = beanFactory.getClassLoader().loadClass(this.beanClassName));
-            } catch (ClassNotFoundException e) {
-                throw new BeanCreationException("create bean for " + beanClassName + " failed.");
-            }
+    public Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException {
+        String className = this.getBeanClassName();
+        if (className == null) {
+            return null;
         }
-        return _beanClass;
+        Class<?> resolvedClass = classLoader.loadClass(className);
+        this.beanClass = resolvedClass;
+        return resolvedClass;
     }
 
     @Override
     public void setBeanClass(Class<?> beanClass) {
-        this.beanClass = new SoftReference<>(beanClass);
+        this.beanClass = beanClass;
     }
 
     @Override
     public boolean hasConstructorArgumentValues() {
         return !this.constructorArgument.isEmpty();
+    }
+
+    @Override
+    public boolean hasBeanClass() {
+        return this.beanClass != null;
     }
 }
