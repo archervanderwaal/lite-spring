@@ -2,14 +2,16 @@ package com.archervanderwaal.litespring.aop.config;
 
 import com.archervanderwaal.litespring.beans.BeanUtils;
 import com.archervanderwaal.litespring.beans.factory.BeanFactory;
+import com.archervanderwaal.litespring.beans.factory.FactoryBean;
 import com.archervanderwaal.litespring.utils.StringUtils;
+import com.archervanderwaal.litespring.beans.factory.BeanFactoryAware;
 
 import java.lang.reflect.Method;
 
 /**
  * @author stormma stormmaybin@gmail.com
  */
-public class MethodLocatingFactory {
+public class MethodLocatingFactory implements FactoryBean<Method>, BeanFactoryAware {
 
     private String targetBeanName;
 
@@ -25,6 +27,7 @@ public class MethodLocatingFactory {
         this.methodName = methodName;
     }
 
+    @Override
     public void setBeanFactory(BeanFactory beanFactory) {
         if (!StringUtils.hasText(this.targetBeanName)) {
             throw new IllegalArgumentException("Property 'targetBeanName' is required");
@@ -42,7 +45,13 @@ public class MethodLocatingFactory {
         }
     }
 
-    public Object getObject() {
+    @Override
+    public Method getObject() {
         return this.method;
+    }
+
+    @Override
+    public Class<?> getObjectType() {
+        return Method.class;
     }
 }

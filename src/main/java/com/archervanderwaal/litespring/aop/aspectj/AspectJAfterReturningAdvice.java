@@ -1,6 +1,7 @@
 package com.archervanderwaal.litespring.aop.aspectj;
 
 import com.archervanderwaal.litespring.aop.Pointcut;
+import com.archervanderwaal.litespring.aop.config.AspectInstanceFactory;
 import org.aopalliance.intercept.MethodInvocation;
 
 import java.lang.reflect.Method;
@@ -10,8 +11,8 @@ import java.lang.reflect.Method;
  */
 public class AspectJAfterReturningAdvice extends AbstractAspectJAdvice {
 
-    public AspectJAfterReturningAdvice(Method adviceMethod, Pointcut pointcut, Object adviceObject) {
-        super(adviceMethod, pointcut, adviceObject);
+    public AspectJAfterReturningAdvice(Method adviceMethod, Pointcut pointcut, AspectInstanceFactory adviceObjectFactory) {
+        super(adviceMethod, pointcut, adviceObjectFactory);
     }
 
     @Override

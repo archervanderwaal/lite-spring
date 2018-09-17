@@ -3,7 +3,9 @@ package com.archervanderwaal.litespring.test.v5;
 import com.archervanderwaal.litespring.aop.aspectj.AspectJAfterReturningAdvice;
 import com.archervanderwaal.litespring.aop.aspectj.AspectJAfterThrowingAdvice;
 import com.archervanderwaal.litespring.aop.aspectj.AspectJBeforeAdvice;
+import com.archervanderwaal.litespring.aop.config.AspectInstanceFactory;
 import com.archervanderwaal.litespring.aop.framework.ReflectiveMethodInvocation;
+import com.archervanderwaal.litespring.beans.factory.BeanFactory;
 import com.archervanderwaal.litespring.test.v5.entity.PetStoreService;
 import com.archervanderwaal.litespring.test.v5.tx.TransactionManager;
 import com.archervanderwaal.litespring.test.v5.util.MessageTracker;
@@ -19,7 +21,7 @@ import java.util.List;
 /**
  * @author stormma stormmaybin@gmail.com
  */
-public class ReflectiveMethodInvocationTestV5 {
+public class ReflectiveMethodInvocationTestV5 extends AbstractTestV5 {
 
     private AspectJBeforeAdvice beforeAdvice = null;
 
@@ -29,8 +31,6 @@ public class ReflectiveMethodInvocationTestV5 {
 
     private PetStoreService petStoreService = null;
 
-    private TransactionManager tx = null;
-
     private Method targetMethod = null;
 
     private Method targetMethodWithException = null;
@@ -38,22 +38,24 @@ public class ReflectiveMethodInvocationTestV5 {
     @Before
     public void setUp() throws NoSuchMethodException {
         petStoreService = new PetStoreService();
-        tx = new TransactionManager();
         MessageTracker.clearMessages();
+        AspectInstanceFactory adviceObjectFactory = this.getAspectInstanceFactory("tx");
+        BeanFactory beanFactory = this.getBeanFactory("petstore-v5.xml");
+        adviceObjectFactory.setBeanFactory(beanFactory);
         beforeAdvice = new AspectJBeforeAdvice(
                 TransactionManager.class.getMethod("start"),
                 null,
-                tx
+                adviceObjectFactory
         );
         afterReturningAdvice = new AspectJAfterReturningAdvice(
                 TransactionManager.class.getMethod("commit"),
                 null,
-                tx
+                adviceObjectFactory
         );
         afterThrowingAdvice = new AspectJAfterThrowingAdvice(
                 TransactionManager.class.getMethod("rollback"),
                 null,
-                tx
+                adviceObjectFactory
         );
         targetMethod = PetStoreService.class.getMethod("placeOrder");
         targetMethodWithException = PetStoreService.class.getMethod("placeOrderWithException");

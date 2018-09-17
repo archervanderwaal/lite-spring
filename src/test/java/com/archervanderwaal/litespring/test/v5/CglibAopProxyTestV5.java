@@ -2,10 +2,12 @@ package com.archervanderwaal.litespring.test.v5;
 
 import com.archervanderwaal.litespring.aop.aspectj.AspectJAfterReturningAdvice;
 import com.archervanderwaal.litespring.aop.aspectj.AspectJBeforeAdvice;
+import com.archervanderwaal.litespring.aop.config.AspectInstanceFactory;
 import com.archervanderwaal.litespring.aop.framework.AopConfigSupport;
 import com.archervanderwaal.litespring.aop.framework.CglibAopProxyFactory;
 import com.archervanderwaal.litespring.aop.aspectj.AspectJExpressionPointcut;
 import com.archervanderwaal.litespring.aop.framework.AopConfig;
+import com.archervanderwaal.litespring.beans.factory.BeanFactory;
 import com.archervanderwaal.litespring.test.v5.entity.PetStoreService;
 import com.archervanderwaal.litespring.test.v5.tx.TransactionManager;
 import com.archervanderwaal.litespring.test.v5.util.MessageTracker;
@@ -18,7 +20,7 @@ import java.util.List;
 /**
  * @author stormma stormmaybin@gmail.com
  */
-public class CglibAopProxyTestV5 {
+public class CglibAopProxyTestV5 extends AbstractTestV5 {
     private AspectJBeforeAdvice beforeAdvice;
 
     private AspectJAfterReturningAdvice afterReturningAdvice;
@@ -32,16 +34,18 @@ public class CglibAopProxyTestV5 {
     @Before
     public void setUp() throws NoSuchMethodException {
         petStoreService = new PetStoreService();
-        transactionManager = new TransactionManager();
         String expression = "execution(* me.stormma.litespring.test.v5.entity.*.placeOrder(..))";
         expressionPointcut = new AspectJExpressionPointcut();
         expressionPointcut.setExpression(expression);
+        AspectInstanceFactory adviceObjectFactory = this.getAspectInstanceFactory("tx");
+        BeanFactory beanFactory = this.getBeanFactory("petstore-v5.xml");
+        adviceObjectFactory.setBeanFactory(beanFactory);
 
         beforeAdvice = new AspectJBeforeAdvice(TransactionManager.class.getMethod("start")
-                , expressionPointcut, transactionManager);
+                , expressionPointcut, adviceObjectFactory);
 
         afterReturningAdvice = new AspectJAfterReturningAdvice(TransactionManager.class.getMethod("commit")
-                , expressionPointcut, transactionManager);
+                , expressionPointcut, adviceObjectFactory);
     }
 
     @Test

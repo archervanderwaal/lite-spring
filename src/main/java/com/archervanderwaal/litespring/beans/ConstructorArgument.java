@@ -44,6 +44,10 @@ public class ConstructorArgument {
         this.argumentValues.add(valueHolder);
     }
 
+    public void addArgumentValue(Object value) {
+        this.argumentValues.add(new ValueHolder(value));
+    }
+
     public static class ValueHolder {
 
         private Object value;

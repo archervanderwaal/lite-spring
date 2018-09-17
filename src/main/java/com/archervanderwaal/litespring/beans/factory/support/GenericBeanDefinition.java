@@ -29,6 +29,9 @@ public class GenericBeanDefinition implements BeanDefinition {
 
     private Class<?> beanClass;
 
+    // is synthetic bean?
+    private boolean synthetic = false;
+
     public GenericBeanDefinition() {
 
     }
@@ -36,6 +39,15 @@ public class GenericBeanDefinition implements BeanDefinition {
     public GenericBeanDefinition(String beanId, String beanClassName) {
         this.beanId = beanId;
         this.beanClassName = beanClassName;
+    }
+
+    public GenericBeanDefinition(Class<?> clazz) {
+        this.beanClass = clazz;
+        this.beanClassName = clazz.getName();
+    }
+
+    public void setSynthetic(boolean synthetic) {
+        this.synthetic = synthetic;
     }
 
     @Override
@@ -99,14 +111,12 @@ public class GenericBeanDefinition implements BeanDefinition {
         return this.beanClass;
     }
 
-    public Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException {
+    public void resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException {
         String className = this.getBeanClassName();
         if (className == null) {
-            return null;
+            return;
         }
-        Class<?> resolvedClass = classLoader.loadClass(className);
-        this.beanClass = resolvedClass;
-        return resolvedClass;
+        this.beanClass = classLoader.loadClass(className);
     }
 
     @Override
@@ -122,5 +132,10 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public boolean hasBeanClass() {
         return this.beanClass != null;
+    }
+
+    @Override
+    public boolean isSynthetic() {
+        return this.synthetic;
     }
 }

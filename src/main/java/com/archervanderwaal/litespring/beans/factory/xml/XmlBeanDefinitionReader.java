@@ -12,6 +12,7 @@ import com.archervanderwaal.litespring.beans.factory.config.TypedStringValue;
 import com.archervanderwaal.litespring.beans.factory.support.BeanDefinitionRegistry;
 import com.archervanderwaal.litespring.core.io.Resource;
 import com.archervanderwaal.litespring.utils.StringUtils;
+import com.archervanderwaal.litespring.aop.config.ConfigBeanDefinitionParser;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -90,6 +91,11 @@ public class XmlBeanDefinitionReader {
     private static final String BASE_PACKAGE_ATTRIBUTE = "base-package";
 
     /**
+     * aop namespace uri
+     */
+    private static final String AOP_NAMESPACE_URI = "http://www.springframework.org/schema/aop";
+
+    /**
      * bean definition registry
      */
     private final BeanDefinitionRegistry registry;
@@ -127,6 +133,8 @@ public class XmlBeanDefinitionReader {
                 } else if (this.isContextNamespace(namespaceUri)) {
                     // <context:component-scan>
                     parseComponentElement(element);
+                } else if (this.isAOPNameSpace(namespaceUri)) {
+                    parseAOPElement(element);
                 }
             }
         } catch (DocumentException | FileNotFoundException e) {
@@ -141,12 +149,6 @@ public class XmlBeanDefinitionReader {
                 }
             }
         }
-    }
-
-    private void parseComponentElement(Element element) {
-        String basePackages = element.attributeValue(BASE_PACKAGE_ATTRIBUTE);
-        ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(registry);
-        scanner.doScan(basePackages);
     }
 
     private void parseDefaultElement(Element element) {
@@ -165,12 +167,27 @@ public class XmlBeanDefinitionReader {
         registry.registerBeanDefinition(beanId, beanDefinition);
     }
 
+    private void parseComponentElement(Element element) {
+        String basePackages = element.attributeValue(BASE_PACKAGE_ATTRIBUTE);
+        ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(this.registry);
+        scanner.doScan(basePackages);
+    }
+
+    private void parseAOPElement(Element element) {
+        ConfigBeanDefinitionParser parser = new ConfigBeanDefinitionParser();
+        parser.parse(element, this.registry);
+    }
+
     private boolean isDefaultNamespace(String namespaceUri) {
         return (!StringUtils.hasLength(namespaceUri) || BEANS_NAMESPACE_URI.equals(namespaceUri));
     }
 
     private boolean isContextNamespace(String namespaceUri) {
         return (!StringUtils.hasLength(namespaceUri) || CONTEXT_NAMESPACE_URI.equals(namespaceUri));
+    }
+
+    private boolean isAOPNameSpace(String namespaceUri) {
+        return (!StringUtils.hasLength(namespaceUri) || AOP_NAMESPACE_URI.equals(namespaceUri));
     }
 
     /**

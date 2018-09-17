@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         //ApplicationContextTestV5.class,
+        BeanDefinitionTestV5.class,
         CglibTestV5.class,
         MethodLocatingFactoryTestV5.class,
         PointcutTestV5.class,

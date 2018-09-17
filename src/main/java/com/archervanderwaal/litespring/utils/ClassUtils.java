@@ -1,7 +1,6 @@
 package com.archervanderwaal.litespring.utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author stormma stormmaybin@gmail.com
@@ -20,13 +19,13 @@ public abstract class ClassUtils {
      * Map with primitive wrapper type as key and corresponding primitive
      * type as value, for example: Integer.class -> int.class.
      */
-    private static final Map<Class<?>, Class<?>> wrapperToPrimitiveTypeMap = new HashMap<Class<?>, Class<?>>(8);
+    private static final Map<Class<?>, Class<?>> wrapperToPrimitiveTypeMap = new HashMap<>(8);
 
     /**
      * Map with primitive type as key and corresponding wrapper
      * type as value, for example: int.class -> Integer.class.
      */
-    private static final Map<Class<?>, Class<?>> primitiveTypeToWrapperMap = new HashMap<Class<?>, Class<?>>(8);
+    private static final Map<Class<?>, Class<?>> primitiveTypeToWrapperMap = new HashMap<>(8);
 
     static {
         wrapperToPrimitiveTypeMap.put(Boolean.class, boolean.class);
@@ -46,7 +45,7 @@ public abstract class ClassUtils {
         ClassLoader classLoader = null;
         try {
             classLoader = Thread.currentThread().getContextClassLoader();
-        } catch (Throwable ex) {
+        } catch (Throwable ignored) {
 
         }
         if (classLoader == null) {
@@ -54,7 +53,7 @@ public abstract class ClassUtils {
             if (classLoader == null) {
                 try {
                     classLoader = ClassLoader.getSystemClassLoader();
-                } catch (Throwable ex) {
+                } catch (Throwable ignored) {
 
                 }
             }
@@ -75,17 +74,12 @@ public abstract class ClassUtils {
         }
         if (lhsType.isPrimitive()) {
             Class<?> resolvedPrimitive = wrapperToPrimitiveTypeMap.get(rhsType);
-            if (resolvedPrimitive != null && lhsType.equals(resolvedPrimitive)) {
-                return true;
-            }
+            return lhsType.equals(resolvedPrimitive);
         }
         else {
             Class<?> resolvedWrapper = primitiveTypeToWrapperMap.get(rhsType);
-            if (resolvedWrapper != null && lhsType.isAssignableFrom(resolvedWrapper)) {
-                return true;
-            }
+            return resolvedWrapper != null && lhsType.isAssignableFrom(resolvedWrapper);
         }
-        return false;
     }
 
     public static String convertClassNameToResourcePath(String className) {
@@ -107,5 +101,109 @@ public abstract class ClassUtils {
         String shortName = className.substring(lastDotIndex + 1, nameEndIndex);
         shortName = shortName.replace(INNER_CLASS_SEPARATOR, PACKAGE_SEPARATOR);
         return shortName;
+    }
+
+    /**
+     * Return all interfaces that the given instance implements as array,
+     * including ones implemented by superclasses.
+     * @param instance the instance to analyze for interfaces
+     * @return all interfaces that the given instance implements as array
+     */
+    public static Class<?>[] getAllInterfaces(Object instance) {
+        Assert.assertNotNull(instance, "Instance must not be null");
+        return getAllInterfacesForClass(instance.getClass());
+    }
+
+    /**
+     * Return all interfaces that the given class implements as array,
+     * including ones implemented by superclasses.
+     * <p>If the class itself is an interface, it gets returned as sole interface.
+     * @param clazz the class to analyze for interfaces
+     * @return all interfaces that the given object implements as array
+     */
+    public static Class<?>[] getAllInterfacesForClass(Class<?> clazz) {
+        return getAllInterfacesForClass(clazz, null);
+    }
+
+    /**
+     * Return all interfaces that the given class implements as array,
+     * including ones implemented by superclasses.
+     * <p>If the class itself is an interface, it gets returned as sole interface.
+     * @param clazz the class to analyze for interfaces
+     * @param classLoader the ClassLoader that the interfaces need to be visible in
+     * (may be {@code null} when accepting all declared interfaces)
+     * @return all interfaces that the given object implements as array
+     */
+    public static Class<?>[] getAllInterfacesForClass(Class<?> clazz, ClassLoader classLoader) {
+        Set<Class> ifcs = getAllInterfacesForClassAsSet(clazz, classLoader);
+        return ifcs.toArray(new Class[0]);
+    }
+
+    /**
+     * Return all interfaces that the given instance implements as Set,
+     * including ones implemented by superclasses.
+     * @param instance the instance to analyze for interfaces
+     * @return all interfaces that the given instance implements as Set
+     */
+    public static Set<Class> getAllInterfacesAsSet(Object instance) {
+        Assert.assertNotNull(instance, "Instance must not be null");
+        return getAllInterfacesForClassAsSet(instance.getClass());
+    }
+
+    /**
+     * Return all interfaces that the given class implements as Set,
+     * including ones implemented by superclasses.
+     * <p>If the class itself is an interface, it gets returned as sole interface.
+     * @param clazz the class to analyze for interfaces
+     * @return all interfaces that the given object implements as Set
+     */
+    public static Set<Class> getAllInterfacesForClassAsSet(Class clazz) {
+        return getAllInterfacesForClassAsSet(clazz, null);
+    }
+
+    /**
+     * Return all interfaces that the given class implements as Set,
+     * including ones implemented by superclasses.
+     * <p>If the class itself is an interface, it gets returned as sole interface.
+     * @param clazz the class to analyze for interfaces
+     * @param classLoader the ClassLoader that the interfaces need to be visible in
+     * (may be {@code null} when accepting all declared interfaces)
+     * @return all interfaces that the given object implements as Set
+     */
+    public static Set<Class> getAllInterfacesForClassAsSet(Class clazz, ClassLoader classLoader) {
+        Assert.assertNotNull(clazz, "Class must not be null");
+        if (clazz.isInterface() && isVisible(clazz, classLoader)) {
+            return Collections.singleton(clazz);
+        }
+        Set<Class> interfaces = new LinkedHashSet<>();
+        while (clazz != null) {
+            Class<?>[] ifcs = clazz.getInterfaces();
+            for (Class<?> ifc : ifcs) {
+                interfaces.addAll(getAllInterfacesForClassAsSet(ifc, classLoader));
+            }
+            clazz = clazz.getSuperclass();
+        }
+        return interfaces;
+    }
+
+    /**
+     * Check whether the given class is visible in the given ClassLoader.
+     * @param clazz the class to check (typically an interface)
+     * @param classLoader the ClassLoader to check against (may be {@code null},
+     * in which case this method will always return {@code true})
+     */
+    public static boolean isVisible(Class<?> clazz, ClassLoader classLoader) {
+        if (classLoader == null) {
+            return true;
+        }
+        try {
+            Class<?> actualClass = classLoader.loadClass(clazz.getName());
+            return (clazz == actualClass);
+            // Else: different interface class found...
+        }
+        catch (ClassNotFoundException ex) {
+            // No interface class found...
+            return false;
+        }
     }
 }

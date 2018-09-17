@@ -1,7 +1,6 @@
 package com.archervanderwaal.litespring.beans.factory.support;
 
 import com.archervanderwaal.litespring.beans.BeanDefinition;
-import com.archervanderwaal.litespring.beans.factory.config.ConfigurableBeanFactory;
 import com.archervanderwaal.litespring.beans.ConstructorArgument;
 import com.archervanderwaal.litespring.beans.SimpleTypeConverter;
 import com.archervanderwaal.litespring.beans.TypeMismatchException;
@@ -19,18 +18,18 @@ import java.util.List;
  */
 public class ConstructorResolver {
 
-    private final ConfigurableBeanFactory beanFactory;
+    private final AbstractBeanFactory beanFactory;
 
     private final Logger logger = Logger.getLogger(ConstructorResolver.class);
 
-    public ConstructorResolver(ConfigurableBeanFactory beanFactory) {
+    public ConstructorResolver(AbstractBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
     }
 
     public Object autowireConstructor(final BeanDefinition beanDefinition) {
         Constructor<?> constructorToUse = null;
         Object[] argsToUse = null;
-        Class<?> beanClass = null;
+        Class<?> beanClass;
         try {
             beanClass = this.beanFactory.getClassLoader().loadClass(beanDefinition.getBeanClassName());
         } catch (ClassNotFoundException e) {

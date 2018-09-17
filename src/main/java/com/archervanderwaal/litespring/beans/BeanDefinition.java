@@ -87,10 +87,16 @@ public interface BeanDefinition {
      * @param classLoader
      * @return
      */
-    Class<?> resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException;
+    void resolveBeanClass(ClassLoader classLoader) throws ClassNotFoundException;
 
     /**
      * @return
      */
     boolean hasBeanClass();
+
+    /**
+     * is synthetic bean
+     * @return
+     */
+    boolean isSynthetic();
 }

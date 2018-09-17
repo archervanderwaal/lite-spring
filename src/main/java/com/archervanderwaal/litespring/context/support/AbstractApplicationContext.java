@@ -1,5 +1,6 @@
 package com.archervanderwaal.litespring.context.support;
 
+import com.archervanderwaal.litespring.aop.aspectj.AspectJAutoProxyProcessor;
 import com.archervanderwaal.litespring.beans.factory.NoSuchBeanDefinitionException;
 import com.archervanderwaal.litespring.beans.factory.annotation.AutowiredAnnotationProcessor;
 import com.archervanderwaal.litespring.beans.factory.config.ConfigurableBeanFactory;
@@ -8,6 +9,8 @@ import com.archervanderwaal.litespring.beans.factory.support.DefaultBeanFactory;
 import com.archervanderwaal.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.archervanderwaal.litespring.core.io.Resource;
 import com.archervanderwaal.litespring.utils.ClassUtils;
+
+import java.util.List;
 
 /**
  * @author stormma stormmaybin@gmail.com
@@ -43,13 +46,27 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     }
 
     protected void registerBeanPostProcessor(ConfigurableBeanFactory factory) {
-        AutowiredAnnotationProcessor processor = new AutowiredAnnotationProcessor();
-        processor.setBeanFactory(factory);
-        this.factory.addBeanPostProcess(processor);
+        // register autowire annotation processor
+        {
+            AutowiredAnnotationProcessor processor = new AutowiredAnnotationProcessor();
+            processor.setBeanFactory(factory);
+            this.factory.addBeanPostProcess(processor);
+        }
+        // register auto proxy process
+        {
+            AspectJAutoProxyProcessor processor = new AspectJAutoProxyProcessor();
+            processor.setBeanFactory(factory);
+            this.factory.addBeanPostProcess(processor);
+        }
     }
 
     @Override
     public Class<?> getType(String beanName) throws NoSuchBeanDefinitionException {
         return this.factory.getType(beanName);
+    }
+
+    @Override
+    public List<Object> getBeansByType(Class<?> type) {
+        return this.factory.getBeansByType(type);
     }
 }

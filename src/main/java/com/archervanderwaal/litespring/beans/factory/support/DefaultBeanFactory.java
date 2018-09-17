@@ -1,13 +1,12 @@
 package com.archervanderwaal.litespring.beans.factory.support;
 
 import com.archervanderwaal.litespring.beans.BeanDefinition;
+import com.archervanderwaal.litespring.beans.factory.BeanFactoryAware;
 import com.archervanderwaal.litespring.beans.factory.NoSuchBeanDefinitionException;
-import com.archervanderwaal.litespring.beans.factory.config.ConfigurableBeanFactory;
 import com.archervanderwaal.litespring.beans.factory.config.DependencyDescriptor;
 import com.archervanderwaal.litespring.beans.PropertyValue;
 import com.archervanderwaal.litespring.beans.SimpleTypeConverter;
 import com.archervanderwaal.litespring.beans.factory.BeanCreationException;
-import com.archervanderwaal.litespring.beans.factory.BeanFactory;
 import com.archervanderwaal.litespring.beans.factory.config.BeanPostProcessor;
 import com.archervanderwaal.litespring.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import com.archervanderwaal.litespring.utils.ClassUtils;
@@ -29,8 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author stormma stormmaybin@gmail.com
  */
 public class DefaultBeanFactory
-        extends DefaultSingletonBeanRegistry
-        implements BeanFactory, BeanDefinitionRegistry, ConfigurableBeanFactory {
+        extends AbstractBeanFactory implements BeanDefinitionRegistry {
 
     /**
      * load bean definitions to map
@@ -88,11 +86,12 @@ public class DefaultBeanFactory
         return createBean(beanDefinition);
     }
 
-    private Object createBean(BeanDefinition beanDefinition) {
+    protected Object createBean(BeanDefinition beanDefinition) {
         // create bean's instance
         Object bean = instantiateBean(beanDefinition);
         // populate bean's property, also can be use populateBeanUseCommonsBeanUtils
         populateBean(beanDefinition, bean);
+        bean = initializeBean(beanDefinition, bean);
         return bean;
     }
 
@@ -186,6 +185,33 @@ public class DefaultBeanFactory
         }
     }
 
+    protected Object initializeBean(BeanDefinition beanDefinition, Object bean) {
+        invokeAwareMethods(bean);
+        // TODO others initialize bean action
+        // create proxy
+        if (!beanDefinition.isSynthetic()) {
+            return applyBeanPostProcessorAfterInitialize(bean, beanDefinition.getBeanId());
+        }
+        return bean;
+    }
+
+    private Object applyBeanPostProcessorAfterInitialize(Object bean, String beanId) {
+        Object res = bean;
+        for (BeanPostProcessor processor : this.getBeanPostProcessors()) {
+            res = processor.postProcessAfterInitialization(bean, beanId);
+            if (res == null) {
+                return null;
+            }
+        }
+        return res;
+    }
+
+    private void invokeAwareMethods(final Object bean) {
+        if (bean instanceof BeanFactoryAware) {
+            ((BeanFactoryAware) bean).setBeanFactory(this);
+        }
+    }
+
     @Override
     public void setBeanClassLoader(ClassLoader classLoader) {
         this.classLoader = classLoader;
@@ -228,6 +254,26 @@ public class DefaultBeanFactory
         }
         resolveBeanClass(beanDefinition);
         return beanDefinition.getBeanClass();
+    }
+
+    @Override
+    public List<Object> getBeansByType(Class<?> type) {
+        List<Object> res = new ArrayList<>();
+        List<String> beanIds = this.getBeanIdsByType(type);
+        for (String beanId : beanIds) {
+            res.add(this.getBean(beanId));
+        }
+        return res;
+    }
+
+    private List<String> getBeanIdsByType(Class<?> type) {
+        List<String> res = new ArrayList<>();
+        for (String beanId : this.beanDefinitionMap.keySet()) {
+            if (type.isAssignableFrom(this.getType(beanId))) {
+                res.add(beanId);
+            }
+        }
+        return res;
     }
 
     private void resolveBeanClass(BeanDefinition beanDefinition) {
