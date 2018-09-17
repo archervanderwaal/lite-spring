@@ -14,4 +14,4 @@ purpose of this framework is to learn spring in depth.
 - autowire injection(done)
 - post processor(done)
 
-#### aop (doing)
+#### aop (done)
