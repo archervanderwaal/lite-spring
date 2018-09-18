@@ -8,7 +8,7 @@
     <bean id="petStore" class="com.archervanderwaal.litespring.test.v1.entity.PetStoreService"/>
 
     <!-- invalid bean definition -->
-    <!--<bean id="invalidBean" class="invalid"/>-->
+    <bean id="invalidBean" class="com.archervanderwaal.invalid"/>
 
     <!-- prototype bean definition -->
     <bean id="petStorePrototype" class="com.archervanderwaal.litespring.test.v1.entity.PetStoreService" scope="prototype"/>

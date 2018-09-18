@@ -9,7 +9,7 @@ import com.archervanderwaal.litespring.aop.aspectj.AspectJExpressionPointcut;
 import com.archervanderwaal.litespring.aop.framework.AopConfig;
 import com.archervanderwaal.litespring.beans.factory.BeanFactory;
 import com.archervanderwaal.litespring.test.v5.entity.PetStoreService;
-import com.archervanderwaal.litespring.test.v5.tx.TransactionManager;
+import com.archervanderwaal.litespring.test.v5.service.TransactionManager;
 import com.archervanderwaal.litespring.test.v5.util.MessageTracker;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class CglibAopProxyTestV5 extends AbstractTestV5 {
         String expression = "execution(* me.stormma.litespring.test.v5.entity.*.placeOrder(..))";
         expressionPointcut = new AspectJExpressionPointcut();
         expressionPointcut.setExpression(expression);
-        AspectInstanceFactory adviceObjectFactory = this.getAspectInstanceFactory("tx");
+        AspectInstanceFactory adviceObjectFactory = this.getAspectInstanceFactory("service");
         BeanFactory beanFactory = this.getBeanFactory("petstore-v5.xml");
         adviceObjectFactory.setBeanFactory(beanFactory);
 

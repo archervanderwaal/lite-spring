@@ -4,7 +4,7 @@ import com.archervanderwaal.litespring.aop.config.MethodLocatingFactory;
 import com.archervanderwaal.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.archervanderwaal.litespring.beans.factory.support.DefaultBeanFactory;
 import com.archervanderwaal.litespring.core.io.ClassPathResource;
-import com.archervanderwaal.litespring.test.v5.tx.TransactionManager;
+import com.archervanderwaal.litespring.test.v5.service.TransactionManager;
 import org.junit.Assert;
 import org.junit.Test;
 

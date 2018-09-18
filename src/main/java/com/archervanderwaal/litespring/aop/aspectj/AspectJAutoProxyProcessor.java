@@ -6,6 +6,7 @@ import com.archervanderwaal.litespring.aop.Pointcut;
 import com.archervanderwaal.litespring.aop.framework.AopConfigSupport;
 import com.archervanderwaal.litespring.aop.framework.AopProxyFactory;
 import com.archervanderwaal.litespring.aop.framework.CglibAopProxyFactory;
+import com.archervanderwaal.litespring.aop.framework.JdkAopProxyFactory;
 import com.archervanderwaal.litespring.beans.BeansException;
 import com.archervanderwaal.litespring.beans.factory.config.BeanPostProcessor;
 import com.archervanderwaal.litespring.beans.factory.config.ConfigurableBeanFactory;
@@ -52,7 +53,6 @@ public class AspectJAutoProxyProcessor implements BeanPostProcessor {
             config.addAdvice(advice);
         }
 
-        // TODO for jdk dynamic proxy 2018/09/17
         Set<Class> targetInterfaces = ClassUtils.getAllInterfacesForClassAsSet(bean.getClass());
         for (Class<?> targetInterface : targetInterfaces) {
             config.addInterface(targetInterface);
@@ -60,13 +60,13 @@ public class AspectJAutoProxyProcessor implements BeanPostProcessor {
 
         config.setTargetObject(bean);
 
-        AopProxyFactory proxyFactory = new CglibAopProxyFactory(config);
-        //TODO jdk dynamic proxy 2018/09/17
-//        if (config.getProxiedInterfaces().length == 0) {
-//            proxyFactory = new CglibAopProxyFactory(config);
-//        } else {
-//            //proxyFactory = new JdkAopProxyFactory(config);
-//        }
+        AopProxyFactory proxyFactory;
+        // choose proxy factory, finished on 2018/09/18
+        if (config.getProxiedInterfaces().length == 0) {
+            proxyFactory = new CglibAopProxyFactory(config);
+        } else {
+            proxyFactory = new JdkAopProxyFactory(config);
+        }
         return proxyFactory.getProxy();
     }
 

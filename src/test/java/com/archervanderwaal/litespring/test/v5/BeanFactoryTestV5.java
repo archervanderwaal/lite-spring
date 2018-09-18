@@ -5,7 +5,7 @@ import com.archervanderwaal.litespring.aop.aspectj.AspectJAfterReturningAdvice;
 import com.archervanderwaal.litespring.aop.aspectj.AspectJAfterThrowingAdvice;
 import com.archervanderwaal.litespring.aop.aspectj.AspectJBeforeAdvice;
 import com.archervanderwaal.litespring.beans.factory.BeanFactory;
-import com.archervanderwaal.litespring.test.v5.tx.TransactionManager;
+import com.archervanderwaal.litespring.test.v5.service.TransactionManager;
 import org.junit.Assert;
 import org.junit.Test;
 

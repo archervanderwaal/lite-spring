@@ -269,7 +269,14 @@ public class DefaultBeanFactory
     private List<String> getBeanIdsByType(Class<?> type) {
         List<String> res = new ArrayList<>();
         for (String beanId : this.beanDefinitionMap.keySet()) {
-            if (type.isAssignableFrom(this.getType(beanId))) {
+            Class<?> beanClass;
+            try {
+                beanClass = this.getType(beanId);
+            } catch (Exception e) {
+                logger.warn(e.getMessage());
+                continue;
+            }
+            if (beanClass != null && type.isAssignableFrom(beanClass)) {
                 res.add(beanId);
             }
         }

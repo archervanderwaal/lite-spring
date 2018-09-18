@@ -7,7 +7,7 @@ import com.archervanderwaal.litespring.aop.config.AspectInstanceFactory;
 import com.archervanderwaal.litespring.aop.framework.ReflectiveMethodInvocation;
 import com.archervanderwaal.litespring.beans.factory.BeanFactory;
 import com.archervanderwaal.litespring.test.v5.entity.PetStoreService;
-import com.archervanderwaal.litespring.test.v5.tx.TransactionManager;
+import com.archervanderwaal.litespring.test.v5.service.TransactionManager;
 import com.archervanderwaal.litespring.test.v5.util.MessageTracker;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.junit.Assert;

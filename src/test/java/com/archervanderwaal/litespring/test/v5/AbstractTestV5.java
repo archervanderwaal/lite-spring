@@ -6,7 +6,7 @@ import com.archervanderwaal.litespring.beans.factory.support.DefaultBeanFactory;
 import com.archervanderwaal.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import com.archervanderwaal.litespring.core.io.ClassPathResource;
 import com.archervanderwaal.litespring.core.io.Resource;
-import com.archervanderwaal.litespring.test.v5.tx.TransactionManager;
+import com.archervanderwaal.litespring.test.v5.service.TransactionManager;
 
 import java.lang.reflect.Method;
 

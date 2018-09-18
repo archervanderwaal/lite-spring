@@ -9,7 +9,7 @@ import com.archervanderwaal.litespring.beans.ConstructorArgument;
 import com.archervanderwaal.litespring.beans.PropertyValue;
 import com.archervanderwaal.litespring.beans.factory.config.RuntimeBeanReference;
 import com.archervanderwaal.litespring.beans.factory.support.DefaultBeanFactory;
-import com.archervanderwaal.litespring.test.v5.tx.TransactionManager;
+import com.archervanderwaal.litespring.test.v5.service.TransactionManager;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.archervanderwaal.litespring.test.v5.tx;
+package com.archervanderwaal.litespring.test.v6.service;
 
 import com.archervanderwaal.litespring.test.v5.util.MessageTracker;
 
