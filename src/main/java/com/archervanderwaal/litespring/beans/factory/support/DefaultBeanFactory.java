@@ -281,7 +281,7 @@ public class DefaultBeanFactory
             try {
                 beanDefinition.resolveBeanClass(this.getClassLoader());
             } catch (ClassNotFoundException e) {
-                throw new RuntimeException("can't load class:" + beanDefinition.getBeanClassName());
+                throw new RuntimeException("can't load class '" + beanDefinition.getBeanClassName() + "'");
             }
         }
     }
