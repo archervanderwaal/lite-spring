@@ -1,6 +1,5 @@
 package com.archervanderwaal.litespring.test.v6;
 
-import junit.framework.TestCase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -12,4 +11,5 @@ import org.junit.runners.Suite;
         ApplicationContextTestV6.class
 })
 public class V6AllTests {
+    // done
 }
